@@ -15,6 +15,11 @@
     "php": ">=7.4",
     "dashifen/wp-handler": "^10.3"
   },
+  "autoload": {
+    "psr-4": {
+      "Dashifen\\ConscientiousContactForm\\": "src"
+    }
+  },
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true
