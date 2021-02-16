@@ -1,0 +1,22 @@
+{
+  "name": "dashifen/conscientious-contact-form",
+  "description": "A WordPress plugin that produces a contact form that can conscientiously either email or simply store messages in the database (or both).",
+  "minimum-stability": "stable",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "David Dashifen Kees",
+      "email": "dashifen@dashifen.com",
+      "role": "developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "dashifen/wp-handler": "^10.3"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}

@@ -1,0 +1,314 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "7baea21f7ff7edca8be058637cb1d186",
+    "packages": [
+        {
+            "name": "dashifen/collection",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/collection.git",
+                "reference": "b73a627dc0bec89619dbaa080c3a6a92808bb484"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/collection/zipball/b73a627dc0bec89619dbaa080c3a6a92808bb484",
+                "reference": "b73a627dc0bec89619dbaa080c3a6a92808bb484",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\Collection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "An abstract object from which concrete collections can be built.",
+            "support": {
+                "issues": "https://github.com/dashifen/collection/issues",
+                "source": "https://github.com/dashifen/collection/tree/2.0.2"
+            },
+            "time": "2021-01-27T02:44:23+00:00"
+        },
+        {
+            "name": "dashifen/debugging",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/debugging.git",
+                "reference": "6898e2ab451b4e6d8e3825d65223181c8351eaa2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/debugging/zipball/6898e2ab451b4e6d8e3825d65223181c8351eaa2",
+                "reference": "6898e2ab451b4e6d8e3825d65223181c8351eaa2",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\Debugging\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "A PHP Trait that defines static methods used for on-screen debugging.",
+            "support": {
+                "issues": "https://github.com/dashifen/debugging/issues",
+                "source": "https://github.com/dashifen/debugging/tree/1.0.1"
+            },
+            "time": "2020-12-09T19:27:09+00:00"
+        },
+        {
+            "name": "dashifen/exception",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/exception.git",
+                "reference": "e795e1d973e9f781eb3a8371b6299c852eef9bc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/exception/zipball/e795e1d973e9f781eb3a8371b6299c852eef9bc1",
+                "reference": "e795e1d973e9f781eb3a8371b6299c852eef9bc1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\Exception\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "homepage": "https://dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "a base class for exceptions in Dashifen's other work",
+            "support": {
+                "issues": "https://github.com/dashifen/exception/issues",
+                "source": "https://github.com/dashifen/exception/tree/1.2.0"
+            },
+            "time": "2019-12-12T14:26:49+00:00"
+        },
+        {
+            "name": "dashifen/repository",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/repository.git",
+                "reference": "83ce68039cc5c0cae1c35c3da80d9d3e23b57d37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/repository/zipball/83ce68039cc5c0cae1c35c3da80d9d3e23b57d37",
+                "reference": "83ce68039cc5c0cae1c35c3da80d9d3e23b57d37",
+                "shasum": ""
+            },
+            "require": {
+                "dashifen/exception": "^1",
+                "ext-json": "*",
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\Repository\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "An object with read-only protected properties from which other objects can be extened.",
+            "support": {
+                "issues": "https://github.com/dashifen/repository/issues",
+                "source": "https://github.com/dashifen/repository/tree/master"
+            },
+            "time": "2020-07-29T15:21:59+00:00"
+        },
+        {
+            "name": "dashifen/transformer",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/transformer.git",
+                "reference": "95202e9740b145c0fb94821115dd049c1a0a2c34"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/transformer/zipball/95202e9740b145c0fb94821115dd049c1a0a2c34",
+                "reference": "95202e9740b145c0fb94821115dd049c1a0a2c34",
+                "shasum": ""
+            },
+            "require": {
+                "dashifen/exception": "^1.2",
+                "php": ">=7.3"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\Transformer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "An interface and abstract class useful for the production of objects which transform data.",
+            "support": {
+                "issues": "https://github.com/dashifen/transformer/issues",
+                "source": "https://github.com/dashifen/transformer/tree/2.2.0"
+            },
+            "time": "2020-03-11T14:56:21+00:00"
+        },
+        {
+            "name": "dashifen/wp-debugging",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/wp-debugging.git",
+                "reference": "aa461ad9c36283466bd120660ff7a7c68eb521b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/wp-debugging/zipball/aa461ad9c36283466bd120660ff7a7c68eb521b0",
+                "reference": "aa461ad9c36283466bd120660ff7a7c68eb521b0",
+                "shasum": ""
+            },
+            "require": {
+                "dashifen/debugging": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\WPDebugging\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "A PHP trait that can be used by other objects for on-screen debugging within a WordPress environment.",
+            "support": {
+                "issues": "https://github.com/dashifen/wp-debugging/issues",
+                "source": "https://github.com/dashifen/wp-debugging/tree/1.0.1"
+            },
+            "time": "2020-12-09T19:29:51+00:00"
+        },
+        {
+            "name": "dashifen/wp-handler",
+            "version": "10.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/wp-handler.git",
+                "reference": "1f2a15e1d9771ef267c83a48fa2375207b2090e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/wp-handler/zipball/1f2a15e1d9771ef267c83a48fa2375207b2090e0",
+                "reference": "1f2a15e1d9771ef267c83a48fa2375207b2090e0",
+                "shasum": ""
+            },
+            "require": {
+                "dashifen/collection": "^2",
+                "dashifen/exception": "^1",
+                "dashifen/repository": "^3",
+                "dashifen/transformer": "^2",
+                "dashifen/wp-debugging": "^1",
+                "php": ">=7.4"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\WPHandler\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "An object to define handlers for various WordPress action and filter hooks using protected methods. ",
+            "support": {
+                "issues": "https://github.com/dashifen/wp-handler/issues",
+                "source": "https://github.com/dashifen/wp-handler/tree/10.3.0"
+            },
+            "time": "2021-01-24T16:23:30+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.4"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
