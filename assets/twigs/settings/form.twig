@@ -1,0 +1,64 @@
+<section class="wrap" aria-labelledby="entry-title">
+  <form method="post" action="{{ function('admin_url', 'admin-post.php') }}">
+    <h1 id="entry-title">Conscientious Contact Form Settings</h1>
+
+    <table class="form-table">
+      <tr>
+        <th scope="row" id="form-fields">
+          <strong>Form Fields</strong>
+        </th>
+        <td headers="form-fields">
+          {% for field, checked in fields %}
+            <p>
+              <label>
+                <input type="checkbox" name="optional-fields[]"
+                  value="{{ function('esc_attr', field) }}"
+                  {{ checked ? 'checked' : '' }}>
+                {{ field | capitalize }}
+              </label>
+            </p>
+          {% endfor %}
+
+          <p class="description">Mark the box next to the form fields you wish to display on your
+            contact form. To guarantee anonymous messages, you can uncheck all of
+            these if you wish. These fields will be optional, though, so visitors
+            can also leave them blank.</p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" id="submission-handlers">
+          <strong>Submission Handlers</strong>
+        </th>
+        <td headers="submission-handlers">
+          {% for handler, checked in handlers %}
+            <p>
+              <label>
+                <input type="radio" name="submission-handler"
+                  value="{{ function('esc_attr', handler) }}"
+                  {{ checked ? 'checked' : '' }}>
+                {{ handler | capitalize }}
+              </label>
+            </p>
+          {% endfor %}
+
+          <p class="description">Submissions can be either emailed to the address listed below,
+            saved in the site's database and reviewed here online, or both.</p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" id="email-field">
+          <label for="recipient"><strong>Message Recipient</strong></label>
+        </th>
+        <td headers="email-field">
+          <input type="email" id="recipient" name="recipient" value="{{ function('esc_attr', recipient) }}">
+          <p class="description">If submissions are to be emailed to someone, enter their address.</p>
+        </td>
+      </tr>
+    </table>
+
+    {{ function('wp_nonce_field', action, nonce, true, false) }}
+    <button type="submit" class="button button-primary" name="action" value="{{ function('esc_attr', action) }}">
+      Save Form Settings
+    </button>
+  </form>
+</section>

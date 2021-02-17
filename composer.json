@@ -13,7 +13,9 @@
   ],
   "require": {
     "php": ">=7.4",
-    "dashifen/wp-handler": "^10.3"
+    "dashifen/validator": "dev-messaging",
+    "dashifen/wp-handler": "^10.3",
+    "timber/timber": "^1.18"
   },
   "autoload": {
     "psr-4": {
@@ -23,5 +25,11 @@
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:dashifen/validator.git"
+    }
+  ]
 }
