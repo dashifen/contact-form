@@ -30,7 +30,14 @@ class SettingsAgent extends AbstractPluginAgent
 {
   use CaseChangingTrait;
   use OptionsManagementTrait;
-  use ActionAndNonceTrait;
+  use ActionAndNonceTrait {
+    
+    // we want to call the trait's getAction method from within the overridden
+    // version we use herein.  to do so, we need to give the trait's method an
+    // alias as follows.  then, we can refer to that alias in our override.
+    
+    getAction as getTraitAction;
+  }
   
   private ValidatorInterface $validator;
   
@@ -41,7 +48,6 @@ class SettingsAgent extends AbstractPluginAgent
    * @param ValidatorInterface|null $validator
    *
    * @throws HandlerException
-   * @throws ValidatorException
    */
   public function __construct(
     PluginHandlerInterface $handler,
@@ -79,6 +85,26 @@ class SettingsAgent extends AbstractPluginAgent
       $this->addAction('admin_menu', 'addFormSettings');
       $this->addAction('admin_post_' . $this->getAction(), 'saveFormSettings');
     }
+  }
+  
+  /**
+   * getAction
+   *
+   * Returns a string naming the action an on screen form is used to perform.
+   * Typically, this is then used to link a form's submission to a method of
+   * the object using this trait to process a visitor's work.
+   *
+   * @param string|null $action
+   *
+   * @return string
+   */
+  protected function getAction(?string $action = null): string
+  {
+    // by default, our trait's method would return 'settings-agent-$action'
+    // as our string.  but, this override adds our option prefix to that to be
+    // sure that settings agent actions in other plugins don't interfere.
+    
+    return $this->getOptionNamePrefix() . $this->getTraitAction($action);
   }
   
   /**
@@ -138,7 +164,7 @@ class SettingsAgent extends AbstractPluginAgent
           ? 'settings/success.twig'
           : 'settings/failure.twig';
         
-        Timber::render($twig, $priorPostValidity->problems);
+        Timber::render($twig, ['problems' => $priorPostValidity->problems]);
       };
       
       $this->addAction('admin_notices', $notifier);
@@ -220,7 +246,7 @@ class SettingsAgent extends AbstractPluginAgent
    */
   private function getOptionalFields(): array
   {
-    $defaults = ['name', 'email', 'organization'];
+    $defaults = SettingsValidator::OPTIONAL_FIELDS;
     $chosenFields = $this->getOption('optional-fields', $defaults);
     foreach ($defaults as $field) {
       
@@ -247,7 +273,7 @@ class SettingsAgent extends AbstractPluginAgent
   protected function getSubmissionHandlers(): array
   {
     $chosenHandler = $this->getOption('submission-handler', 'email');
-    foreach (['email', 'database', 'both'] as $handler) {
+    foreach (SettingsValidator::SUBMISSION_HANDLERS as $handler) {
       $handlers[$handler] = $handler === $chosenHandler ? 1 : 0;
     }
     
@@ -262,6 +288,7 @@ class SettingsAgent extends AbstractPluginAgent
    * @throws HandlerException
    * @throws RepositoryException
    * @throws TransformerException
+   * @throws ValidatorException
    */
   protected function saveFormSettings(): void
   {
@@ -300,21 +327,29 @@ class SettingsAgent extends AbstractPluginAgent
    * @throws RepositoryException
    * @throws ValidatorException
    */
-  private function validatePostedData(array $postedData): PostValidity
+  private function validatePostedData(array &$postedData): PostValidity
   {
     $problems = [];
     
     // before we use our validator, we need to set our required options.  the
-    // recipient option is necessary based on the value of the chosen 
-    // submission handler.  if that handler is the database, then we don't
-    // actually care what the value of our recipient email address is.    
+    // recipient option is necessary based on the chosen submission handler.
+    // if that handler isn't the database, then we need a recipient.
+    // otherwise, all we need is the handler.  note:  we allow for fully
+    // anonymous forms without any identifying information, so the optional
+    // fields are never required.
     
-    $allOptions = $this->getOptionNames();
-    $required = $postedData['submission-handler'] === 'database'
-      ? array_filter($allOptions, fn($opt) => $opt !== 'recipient')
-      : $allOptions;
-    
-    $this->validator->setRequirements($required);
+    if (($postedData['submission-handler'] ?? '') !== 'database') {
+      $this->validator->setRequirements(['submission-handler', 'recipient']);
+    } else {
+      
+      // in here, we don't need our recipient.  so, we actually empty it so
+      // that we don't store data in the database that we don't need.  because
+      // the $postedData array is sent here as a reference, we know tha this
+      // change will "stick" and be present in the calling scope, too.
+      
+      $this->validator->setRequirements(['submission-handler']);
+      $postedData['recipient'] = '';
+    }
     
     // now, we'll loop over our posted data and validate each field/value
     // pair as we encounter them.  the object handles all the logic needed to

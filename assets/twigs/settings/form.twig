@@ -57,8 +57,7 @@
     </table>
 
     {{ function('wp_nonce_field', action, nonce, true, false) }}
-    <button type="submit" class="button button-primary" name="action" value="{{ function('esc_attr', action) }}">
-      Save Form Settings
-    </button>
+    <input type="hidden" name="action" value="{{ function('esc_attr', action) }}">
+    <input type="submit" value="Save Form Settings" class="button button-primary">
   </form>
 </section>

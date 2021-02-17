@@ -4,6 +4,7 @@ namespace Dashifen\ConscientiousContactForm\Services;
 
 use Dashifen\Validator\AbstractValidator;
 use Dashifen\WPHandler\Traits\CaseChangingTrait;
+use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
 
 class SettingsValidator extends AbstractValidator
 {
@@ -44,7 +45,7 @@ class SettingsValidator extends AbstractValidator
       // message to include this field.  otherwise, we start the message and
       // make sure that it contains "Unknown" as its first word.
       
-      if (strpos($this->messages['optional-fields'], 'Unknown') === 0) {
+      if (strpos(($this->messages['optional-fields'] ?? ''), 'Unknown') === 0) {
         $this->messages['optional-fields'] = str_replace('field', 'fields', $this->messages['optional-fields']);
         $this->messages['optional-fields'] .= ', ' . $field;
       } else {
@@ -85,18 +86,20 @@ class SettingsValidator extends AbstractValidator
    */
   protected function validateRecipient(string $recipient): bool
   {
-    if (!in_array('recipient', $this->requirements)) {
-
+    if (!array_key_exists('recipient', $this->requirements)) {
+      
       // the recipient is conditionally required.  luckily, the scope using
       // this object tells us if it's needed, and if we're in here, then it's
       // not.  therefore, we just return true because we don't actually care
       // what value it has.
-  
+      
       return true;
     }
     
     if (!($isValidEmail = $this->isEmail($recipient))) {
-      $this->messages['recipient'] = 'Invalid email: ' . $recipient;
+      $this->messages['recipient'] = empty($recipient)
+        ? 'Please enter an email address'
+        : 'Invalid email: ' . $recipient;
     }
     
     return $isValidEmail;

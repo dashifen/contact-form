@@ -1,0 +1,13 @@
+<div class="notice notice-error">
+  <p>We encountered the following {{ problems|length > 1 ? 'problems' : 'problem' }}
+    while attempting to save your entries.  Previously saved information may
+    have already replaced these errors below.  Please correct any issues and
+    then try again.</p>
+
+  <ul>
+    {% for problem in problems %}
+      <li>{{ problem }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
