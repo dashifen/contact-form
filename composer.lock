@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bff12ebf9c5f725229c671b255460dfd",
+    "content-hash": "5f9a82512a363ae8e93c12e95cea0991",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -481,7 +481,7 @@
         },
         {
             "name": "dashifen/validator",
-            "version": "dev-messaging",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/validator.git",
@@ -520,7 +520,7 @@
             ],
             "description": "An interface and abstract class useful for the production of objects which validate data.",
             "support": {
-                "source": "https://github.com/dashifen/validator/tree/messaging",
+                "source": "https://github.com/dashifen/validator/tree/2.2.0",
                 "issues": "https://github.com/dashifen/validator/issues"
             },
             "time": "2021-02-16T23:05:55+00:00"
@@ -1024,9 +1024,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "dashifen/validator": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

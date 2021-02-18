@@ -7,6 +7,7 @@ use Dashifen\WPHandler\Handlers\HandlerException;
 use Dashifen\WPHandler\Traits\PostMetaManagementTrait;
 use Dashifen\WPHandler\Traits\PostTypeRegistrationTrait;
 use Dashifen\ConscientiousContactForm\Agents\SettingsAgent;
+use Dashifen\ConscientiousContactForm\Repositories\Message;
 use Dashifen\WPHandler\Handlers\Plugins\AbstractPluginHandler;
 use Dashifen\ConscientiousContactForm\Services\SettingsValidator;
 
@@ -36,10 +37,9 @@ class ConscientiousContactForm extends AbstractPluginHandler
    */
   public function initialize(): void
   {
-    $this->registerActivationHook('activation');
-    $this->registerDeactivationHook('deactivation');
-    
     if (!$this->isInitialized()) {
+      $this->registerActivationHook('activation');
+      $this->registerDeactivationHook('deactivation');
       $this->addAction('init', 'initializeAgents', 1);
       $this->addFilter('timber/locations', 'addTwigLocation');
       
@@ -52,6 +52,7 @@ class ConscientiousContactForm extends AbstractPluginHandler
         // need to prep the post type that handles them.
         
         $this->addAction('init', 'registerPostType');
+        $this->addAction('init', 'registerPostStatuses');
         $this->addFilter('manage_' . self::POST_TYPE . '_posts_columns', 'addResponseColumns');
         $this->addFilter('manage_' . self::POST_TYPE . '_posts_custom_column', 'addResponseColumnData', 10, 2);
       }
@@ -91,13 +92,11 @@ class ConscientiousContactForm extends AbstractPluginHandler
   /**
    * getSettingsAgent
    *
-   * Returns a reference to our settings agent.  This is a convenience method
-   * mostly so that we can type hint the returned reference for IDE code
-   * completion where it's needed.
+   * Returns a reference to our settings agent.
    *
    * @return SettingsAgent
    */
-  private function getSettingsAgent(): SettingsAgent
+  public function getSettingsAgent(): SettingsAgent
   {
     return $this->agentCollection[SettingsAgent::class];
   }
@@ -149,6 +148,20 @@ class ConscientiousContactForm extends AbstractPluginHandler
     ];
     
     register_post_type(self::POST_TYPE, $args);
+  }
+  
+  /**
+   * registerPostStatuses
+   *
+   * Adds post statuses related to form submissions.
+   *
+   * @return void
+   */
+  protected function registerPostStatuses(): void
+  {
+    foreach (['read', 'unread'] as $status) {
+      register_post_status($status, ['label' => ucfirst($status)]);
+    }
   }
   
   /**
@@ -266,6 +279,36 @@ class ConscientiousContactForm extends AbstractPluginHandler
   {
     $locations[] = $this->getPluginDir() . '/assets/twigs/';
     return $locations;
+  }
+  
+  /**
+   * savePost
+   *
+   * When our form agent detects that a ccf-response post should be saved in
+   * the database, it passes control back to us so that we can do so.  this is
+   * so that it doesn't have to know about the post meta fields and use the
+   * PostMetaManagementTrait both of which give this object a sense of purpose.
+   *
+   * @param Message $message
+   *
+   * @return void
+   * @throws HandlerException
+   */
+  public function savePost(Message $message): void
+  {
+    $postId = wp_insert_post(
+      [
+        'post_content' => $message->message,
+        'post_type'    => ConscientiousContactForm::POST_TYPE,
+        'post_status'  => 'unread',
+      ]
+    );
+  
+    foreach($this->getPostMetaNames() as $meta) {
+      if (!empty($message->{$meta})) {
+        $this->updatePostMeta($postId, $meta, $message->{$meta});
+      }
+    }
   }
   
   /**

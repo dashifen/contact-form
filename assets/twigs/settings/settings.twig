@@ -46,18 +46,36 @@
         </td>
       </tr>
       <tr>
-        <th scope="row" id="email-field">
+        <th scope="row" id="subject-field">
+          <label for="subject"><strong>Message Subject</strong></label>
+        </th>
+        <td headers="subject-field">
+          <input type="text" id="subject" name="subject" value="{{ function('esc_attr', subject) }}" class="regular-text">
+          <p class="description">If submissions are to be emailed, enter the subject of that email.</p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" id="recipient-field">
           <label for="recipient"><strong>Message Recipient</strong></label>
         </th>
-        <td headers="email-field">
+        <td headers="recipient-field">
           <input type="email" id="recipient" name="recipient" value="{{ function('esc_attr', recipient) }}">
           <p class="description">If submissions are to be emailed to someone, enter their address.</p>
         </td>
       </tr>
+      <tr>
+        <th scope="row" id="thank-you-field">
+          <label for="thank-you"><strong>Thank-You Page</strong></label>
+        </th>
+        <td headers="thank-you-field">
+          <input type="text" id="thank-you" name="thank-you" value="{{ function('esc_attr', thankYou) }}">
+          <p class="description">Enter the slug of the page to which visitors are taken after contacting you.</p>
+        </td>
+      </tr>
     </table>
 
+    <input type="hidden" name="action" value="{{ action }}">
     {{ function('wp_nonce_field', action, nonce, true, false) }}
-    <input type="hidden" name="action" value="{{ function('esc_attr', action) }}">
     <input type="submit" value="Save Form Settings" class="button button-primary">
   </form>
 </section>

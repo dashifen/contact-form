@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": ">=7.4",
-    "dashifen/validator": "dev-messaging",
+    "dashifen/validator": "^2.1",
     "dashifen/wp-handler": "^10.3",
     "timber/timber": "^1.18"
   },

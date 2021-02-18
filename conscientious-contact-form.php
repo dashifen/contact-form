@@ -15,6 +15,7 @@
  */
 
 use Dashifen\Exception\Exception;
+use Dashifen\ConscientiousContactForm\Agents\FormAgent;
 use Dashifen\ConscientiousContactForm\Agents\SettingsAgent;
 use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
 use Dashifen\WPHandler\Agents\Collection\Factory\AgentCollectionFactory;
@@ -34,12 +35,9 @@ try {
     // to the global PHP scope.
     
     $acf = new AgentCollectionFactory();
+    $acf->registerAgent(FormAgent::class);
+    $acf->registerAgent(SettingsAgent::class);
     $conscientiousContactForm = new ConscientiousContactForm();
-    
-    if (is_admin()) {
-      $acf->registerAgent(SettingsAgent::class);
-    }
-    
     $conscientiousContactForm->setAgentCollection($acf);
     $conscientiousContactForm->initialize();
   })();

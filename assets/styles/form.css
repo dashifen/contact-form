@@ -1,0 +1,25 @@
+.ccf-form-items {
+    list-style-type: none;
+    margin: 1.5rem 0 .5rem 0;
+    padding: 0;
+}
+
+.ccf-optional-form-item {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    margin-bottom: .5rem;
+}
+
+.ccf-form-label {
+    display: block;
+    font-weight: bold;
+}
+
+.ccf-form-input {
+    width: 50%;
+}
+
+.ccf-form-textarea {
+    padding: .25rem;
+    width: 80%;
+}

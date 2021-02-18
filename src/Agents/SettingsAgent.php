@@ -39,6 +39,7 @@ class SettingsAgent extends AbstractPluginAgent
     getAction as getTraitAction;
   }
   
+  private array $defaultOptionValues;
   private ValidatorInterface $validator;
   
   /**
@@ -58,6 +59,45 @@ class SettingsAgent extends AbstractPluginAgent
   }
   
   /**
+   * getDefaultValues
+   *
+   * Returns the array of default values for each of this plugins settings.
+   *
+   * @return array
+   */
+  public function getDefaultValues(): array
+  {
+    if (isset($this->defaultOptionValues)) {
+      return $this->defaultOptionValues;
+    }
+    
+    // if we didn't return above, then we'll build our default values array,
+    // save it in our property, and never have to do this work again.  the
+    // if/elseif/else block within our loop is ugly, but when we get to PHP 8,
+    // we cant change it to a match expression.
+    
+    $defaults = [];
+    foreach ($this->getOptionNames() as $option) {
+      
+      // TODO: switch to a match expression when we get to PHP 8
+      
+      if ($option === 'optional-fields') {
+        $defaults[$option] = SettingsValidator::OPTIONAL_FIELDS;
+      } elseif ($option === 'submission-handler') {
+        $defaults[$option] = SettingsValidator::SUBMISSION_HANDLERS[0];
+      } elseif ($option === 'recipient') {
+        $defaults[$option] = get_option('admin_email');
+      } elseif ($option === 'thank-you') {
+        $defaults[$option] = 'thank-you';
+      } elseif ($option === 'subject') {
+        $defaults[$option] = 'A message from your website';
+      }
+    }
+    
+    return ($this->defaultOptionValues = $defaults);
+  }
+  
+  /**
    * getOptionsNames
    *
    * Inherited from the OptionsManagementTrait, this method returns a list of
@@ -68,7 +108,28 @@ class SettingsAgent extends AbstractPluginAgent
    */
   protected function getOptionNames(): array
   {
-    return ['optional-fields', 'submission-handler', 'recipient'];
+    return [
+      'optional-fields',
+      'submission-handler',
+      'recipient',
+      'thank-you',
+      'subject',
+    ];
+  }
+  
+  /**
+   * getDefaultValue
+   *
+   * Returns the default value for a specific setting or null if that setting
+   * doesn't exist.
+   *
+   * @param string $setting
+   *
+   * @return mixed|null
+   */
+  public function getDefaultValue(string $setting)
+  {
+    return $this->getDefaultValues()[$setting] ?? null;
   }
   
   /**
@@ -181,7 +242,7 @@ class SettingsAgent extends AbstractPluginAgent
    */
   protected function addAssets(): void
   {
-    $this->enqueue('assets/admin.css');
+    $this->enqueue('assets/styles/admin.css');
   }
   
   /**
@@ -228,10 +289,12 @@ class SettingsAgent extends AbstractPluginAgent
       'action'    => $this->getAction(),
       'fields'    => $this->getOptionalFields(),
       'handlers'  => $this->getSubmissionHandlers(),
-      'recipient' => $this->getOption('recipient', get_option('admin_email')),
+      'recipient' => $this->getOption('recipient', $this->getDefaultValue('recipient')),
+      'thankYou'  => $this->getOption('thank-you', $this->getDefaultValue('thank-you')),
+      'subject'   => $this->getOption('subject', $this->getDefaultValue('subject')),
     ];
     
-    Timber::render('settings/form.twig', $context);
+    Timber::render('settings/settings.twig', $context);
   }
   
   /**
@@ -246,9 +309,9 @@ class SettingsAgent extends AbstractPluginAgent
    */
   private function getOptionalFields(): array
   {
-    $defaults = SettingsValidator::OPTIONAL_FIELDS;
-    $chosenFields = $this->getOption('optional-fields', $defaults);
-    foreach ($defaults as $field) {
+    $default = $this->getDefaultValue('optional-fields');
+    $chosenFields = $this->getOption('optional-fields', $default);
+    foreach (SettingsValidator::OPTIONAL_FIELDS as $field) {
       
       // for each of the optional fields listed here, if it's found in the
       // $chosenFields option, then we'll store a 1.  otherwise, a zero.  this
@@ -272,7 +335,8 @@ class SettingsAgent extends AbstractPluginAgent
    */
   protected function getSubmissionHandlers(): array
   {
-    $chosenHandler = $this->getOption('submission-handler', 'email');
+    $default = $this->getDefaultValue('submission-handler');
+    $chosenHandler = $this->getOption('submission-handler', $default);
     foreach (SettingsValidator::SUBMISSION_HANDLERS as $handler) {
       $handlers[$handler] = $handler === $chosenHandler ? 1 : 0;
     }
@@ -332,24 +396,29 @@ class SettingsAgent extends AbstractPluginAgent
     $problems = [];
     
     // before we use our validator, we need to set our required options.  the
-    // recipient option is necessary based on the chosen submission handler.
-    // if that handler isn't the database, then we need a recipient.
-    // otherwise, all we need is the handler.  note:  we allow for fully
-    // anonymous forms without any identifying information, so the optional
-    // fields are never required.
+    // submission handler and thank-you page are always required and the
+    // optional fields are, well, optional.
     
+    $requirements = ['submission-handler', 'thank-you'];
     if (($postedData['submission-handler'] ?? '') !== 'database') {
-      $this->validator->setRequirements(['submission-handler', 'recipient']);
+      
+      // but, if we're not using the database, then we do need a recipient.
+      // we'll add that field to our array here so that it's included in our
+      // requirements.
+      
+      $requirements[] = 'recipient';
     } else {
       
-      // in here, we don't need our recipient.  so, we actually empty it so
-      // that we don't store data in the database that we don't need.  because
-      // the $postedData array is sent here as a reference, we know tha this
-      // change will "stick" and be present in the calling scope, too.
+      // but, if we are solely using the database as our handler, then not only
+      // don't we add our recipient to the requirements, we clear the data the
+      // visitor sent us so we don't store unnecessary data in the database.
+      // because $postedData is a reference, this change is maintained in the
+      // calling scope.
       
-      $this->validator->setRequirements(['submission-handler']);
       $postedData['recipient'] = '';
     }
+  
+    $this->validator->setRequirements($requirements);
     
     // now, we'll loop over our posted data and validate each field/value
     // pair as we encounter them.  the object handles all the logic needed to

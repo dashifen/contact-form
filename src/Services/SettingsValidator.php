@@ -2,12 +2,14 @@
 
 namespace Dashifen\ConscientiousContactForm\Services;
 
+use WP_Post;
 use Dashifen\Validator\AbstractValidator;
 use Dashifen\WPHandler\Traits\CaseChangingTrait;
-use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
+use Dashifen\ConscientiousContactForm\Traits\GetPageBySlugTrait;
 
 class SettingsValidator extends AbstractValidator
 {
+  use GetPageBySlugTrait;
   use CaseChangingTrait;
   
   public const OPTIONAL_FIELDS = ['name', 'email', 'organization'];
@@ -103,5 +105,47 @@ class SettingsValidator extends AbstractValidator
     }
     
     return $isValidEmail;
+  }
+  
+  /**
+   * validateThankYou
+   *
+   * The parameter we receive must be the slug of an existing page, so here
+   * we confirm that is the case and return true if it is.
+   *
+   * @param string $slug
+   *
+   * @return bool
+   */
+  protected function validateThankYou(string $slug): bool
+  {
+    // the getPageBySlug function is in the same Services namespace as this
+    // object so we don't have to add a use statement at the top of the file
+    // for it.
+    
+    if (!($isValidThankYou = ($this->getPageBySlug($slug) instanceof WP_Post))) {
+      $this->messages['thank-you'] = 'Please enter a published page\'s slug as your thank-you page.';
+    }
+    
+    return $isValidThankYou;
+  }
+  
+  protected function validateSubject(string $subject): bool
+  {
+    if (!array_key_exists('recipient', $this->requirements)) {
+    
+      // the subject is conditionally required.  luckily, the scope using
+      // this object tells us if it's needed, and if we're in here, then it's
+      // not.  therefore, we just return true because we don't actually care
+      // what value it has.
+    
+      return true;
+    }
+    
+    if ($isValidSubject = !empty($subject)) {
+      $this->messages['subject'] = 'Please enter a subject for your message.';
+    }
+    
+    return $isValidSubject;
   }
 }
