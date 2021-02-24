@@ -1,0 +1,94 @@
+.menu-icon-ccf-response .wp-menu-name {
+    position: relative;
+}
+
+/*
+ * the default color we use here is for the default "fresh" color scheme.
+ */
+
+.menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #00a0d2 !important;
+}
+
+.menu-icon-ccf-response .wp-menu-name .circle {
+    background: #00a0d2;
+    border-radius: 100%;
+    display: inline-block;
+    font-weight: bold;
+    height: 1em;
+    padding: .25em;
+    position: absolute;
+    right: 1.5em;
+    text-align: center;
+    top: .4615em;
+    min-width: 1em;
+}
+
+.admin-color-light .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #04a4cc !important;
+}
+
+.admin-color-light .menu-icon-ccf-response .wp-menu-name .circle {
+    background: #04a4cc;
+}
+
+.admin-color-modern .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #33f078 !important;
+}
+
+.admin-color-modern .menu-icon-ccf-response .wp-menu-name .circle {
+    background: #33f078;
+}
+
+.admin-color-blue .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #74B6CE !important;
+}
+
+.admin-color-blue .menu-icon-ccf-response .wp-menu-name .circle {
+    background: #74B6CE;
+}
+
+.admin-color-coffee .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #9ea476 !important;
+}
+
+.admin-color-coffee .menu-icon-ccf-response .wp-menu-name .circle {
+    background-color: #9ea476;
+}
+
+.admin-color-ectoplasm .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #d46f15 !important;
+}
+
+.admin-color-ectoplasm .menu-icon-ccf-response .wp-menu-name .circle {
+    background: #d46f15;
+}
+
+.admin-color-midnight .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #e14d43  !important;
+}
+
+.admin-color-midnight .menu-icon-ccf-response .wp-menu-name .circle {
+    background: #e14d43;
+}
+
+.admin-color-ocean .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #aa9d88 !important;
+}
+
+.admin-color-ocean .menu-icon-ccf-response .wp-menu-name .circle {
+    background: #aa9d88;
+}
+
+.admin-color-sunrise .menu-icon-ccf-response.with-unread-messages .wp-menu-image::before {
+    color: #ccaf0b !important;
+}
+
+.admin-color-sunrise .menu-icon-ccf-response .wp-menu-name .circle {
+    background: #ccaf0b;
+}
+
+.menu-icon-ccf-response .wp-menu-name .circle p {
+    margin: -3px 0 0 0;
+    color: white;
+}

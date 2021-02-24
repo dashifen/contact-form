@@ -17,13 +17,15 @@ class ConscientiousContactForm extends AbstractPluginHandler
   use PostMetaManagementTrait;
   
   public const SLUG = 'conscientious-contact-form';
-  public const CAPABILITY = 'ccf_responder';
+  public const CAPABILITY = 'ccf-responder';
   
   // WP core puts an arbitrary maximum length of 20 on the names of post types.
   // therefore, we can't use our SLUG in the post type name.  instead, we'll
   // abbreviate it "ccf" and that'll have to do.
   
   public const POST_TYPE = 'ccf-response';
+
+  private int $unreadCount;
   
   /**
    * initialize
@@ -53,6 +55,9 @@ class ConscientiousContactForm extends AbstractPluginHandler
         
         $this->addAction('init', 'registerPostType');
         $this->addAction('init', 'registerPostStatuses');
+        $this->addAction('admin_menu', 'showUnreadCount');
+        $this->addFilter('add_menu_classes', 'alterMenuClasses');
+        $this->addAction('admin_enqueue_scripts', 'addAdminAssets');
         $this->addFilter('manage_' . self::POST_TYPE . '_posts_columns', 'addResponseColumns');
         $this->addFilter('manage_' . self::POST_TYPE . '_posts_custom_column', 'addResponseColumnData', 10, 2);
       }
@@ -136,9 +141,9 @@ class ConscientiousContactForm extends AbstractPluginHandler
         // make new ones or edit them here.  therefore, we've carefully nulled
         // capabilities that would allow for the actions we don't want.
         
+        'create_posts'       => false,
         'edit_post'          => null,
         'read_post'          => null,
-        'create_posts'       => false,
         'delete_post'        => self::CAPABILITY,
         'edit_posts'         => self::CAPABILITY,
         'edit_others_posts'  => null,
@@ -159,9 +164,111 @@ class ConscientiousContactForm extends AbstractPluginHandler
    */
   protected function registerPostStatuses(): void
   {
+    $countFormat = '%s <span class="count">(%%s)</span>';
+    
     foreach (['read', 'unread'] as $status) {
-      register_post_status($status, ['label' => ucfirst($status)]);
+      $capitalized = ucfirst($status);
+      $formatted = sprintf($countFormat, $capitalized);
+      
+      $statusSettings = [
+        'label'       => $capitalized,
+        'label_count' => _n_noop($formatted, $formatted),
+        'public'      => false,
+      ];
+      
+      register_post_status($status, $statusSettings);
     }
+  }
+  
+  /**
+   * showUnreadCount
+   *
+   * Adds the count of unread messages to the Dashboard menu item for CCF
+   * responses.
+   *
+   * @return void
+   */
+  protected function showUnreadCount(): void
+  {
+    global $menu;
+    foreach ($menu as &$item) {
+      if ($item[1] === self::CAPABILITY) {
+        if (($unreadCount = $this->getUnreadCount()) !== 0) {
+          $item[0] .= sprintf(
+            '<div class="circle"><p>%d</p></div>',
+            $unreadCount
+          );
+        }
+        
+        return;
+      }
+    }
+    
+    self::debug($menu, true);
+  }
+  
+  /**
+   * getUnreadCount
+   *
+   * Returns
+   *
+   * @return int
+   */
+  private function getUnreadCount(): int
+  {
+    if (!isset($this->unreadCount)) {
+      $unreadResponses = get_posts(
+        [
+          'fields'         => 'ids',
+          'post_type'      => self::POST_TYPE,
+          'post_status'    => 'unread',
+          'posts_per_page' => -1,
+        ]
+      );
+  
+      $this->unreadCount = sizeof($unreadResponses);
+    }
+    
+    return $this->unreadCount;
+  }
+  
+  /**
+   * alterMenuClasses
+   *
+   * Changes the classes on the ccf-response menu item when there are unread
+   * messages.
+   *
+   * @param array $menu
+   *
+   * @return array
+   */
+  protected function alterMenuClasses(array $menu): array
+  {
+    
+    
+    if ($this->getUnreadCount() !== 0) {
+      foreach ($menu as &$item) {
+        if ($item[1] === self::CAPABILITY) {
+          $item[4] .= ' with-unread-messages';
+          break;
+        }
+      }
+    }
+    
+    return $menu;
+  }
+  
+  /**
+   * addAdminAssets
+   *
+   * Adds the general assets that are loaded throughout the Dashboard.  The
+   * SettingsAgent adds another CSS file but only to the settings page.
+   *
+   * @return void
+   */
+  protected function addAdminAssets(): void
+  {
+    $this->enqueue('assets/styles/admin-general.css');
   }
   
   /**
@@ -303,10 +410,13 @@ class ConscientiousContactForm extends AbstractPluginHandler
         'post_status'  => 'unread',
       ]
     );
-  
-    foreach($this->getPostMetaNames() as $meta) {
-      if (!empty($message->{$meta})) {
-        $this->updatePostMeta($postId, $meta, $message->{$meta});
+    
+    $settingsAgent = $this->getSettingsAgent();
+    $defaultFields = $settingsAgent->getDefaultValue('optional-fields');
+    $chosenFields = $settingsAgent->getOption('optional-fields', $defaultFields);
+    foreach ($chosenFields as $field) {
+      if (!empty($message->{$field})) {
+        $this->updatePostMeta($postId, $field, $message->{$field});
       }
     }
   }

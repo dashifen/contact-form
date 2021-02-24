@@ -299,7 +299,9 @@ class FormAgent extends AbstractPluginAgent
     
     if ($submissionHandler === 'email' || $submissionHandler === 'both') {
       $this->sendEmail($message);
-    } elseif ($submissionHandler === 'database' || $submissionHandler === 'both') {
+    }
+    
+    if ($submissionHandler === 'database' || $submissionHandler === 'both') {
       
       // this object sends our email, but because the main CCF object handles
       // everything else about our ccf-responder post type, we let it handle

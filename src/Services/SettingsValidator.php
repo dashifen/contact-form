@@ -9,8 +9,8 @@ use Dashifen\ConscientiousContactForm\Traits\GetPageBySlugTrait;
 
 class SettingsValidator extends AbstractValidator
 {
-  use GetPageBySlugTrait;
   use CaseChangingTrait;
+  use GetPageBySlugTrait;
   
   public const OPTIONAL_FIELDS = ['name', 'email', 'organization'];
   public const SUBMISSION_HANDLERS = ['email', 'database', 'both'];

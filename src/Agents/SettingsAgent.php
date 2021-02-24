@@ -242,7 +242,7 @@ class SettingsAgent extends AbstractPluginAgent
    */
   protected function addAssets(): void
   {
-    $this->enqueue('assets/styles/admin.css');
+    $this->enqueue('assets/styles/admin-settings.css');
   }
   
   /**
