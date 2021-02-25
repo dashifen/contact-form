@@ -17,6 +17,7 @@
 use Dashifen\Exception\Exception;
 use Dashifen\ConscientiousContactForm\Agents\FormAgent;
 use Dashifen\ConscientiousContactForm\Agents\SettingsAgent;
+use Dashifen\ConscientiousContactForm\Agents\PostTypeAgent;
 use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
 use Dashifen\WPHandler\Agents\Collection\Factory\AgentCollectionFactory;
 
@@ -37,6 +38,7 @@ try {
     $acf = new AgentCollectionFactory();
     $acf->registerAgent(FormAgent::class);
     $acf->registerAgent(SettingsAgent::class);
+    $acf->registerAgent(PostTypeAgent::class);
     $conscientiousContactForm = new ConscientiousContactForm();
     $conscientiousContactForm->setAgentCollection($acf);
     $conscientiousContactForm->initialize();

@@ -91,7 +91,7 @@ class FormAgent extends AbstractPluginAgent
     // prefix our action with the post meta name prefix from our handler which
     // will make it much more unique.
     
-    return $this->handler->getPostMetaNamePrefix() . $this->getTraitAction($action);
+    return ConscientiousContactForm::SLUG . '-' . $this->getTraitAction($action);
   }
   
   /**
@@ -303,11 +303,12 @@ class FormAgent extends AbstractPluginAgent
     
     if ($submissionHandler === 'database' || $submissionHandler === 'both') {
       
-      // this object sends our email, but because the main CCF object handles
-      // everything else about our ccf-responder post type, we let it handle
-      // this, too.
+      // this object sends our email, but because the PostTypeAgent handles
+      // the rest of the activity related to our form responses, we'll let it
+      // handle their creation, too.
       
-      $this->handler->savePost($message);
+      $postTypeAgent = $this->handler->getPostTypeAgent();
+      $postTypeAgent->savePost($message);
     }
     
     // last thing to do before we're done here is to redirect to the thank-you
