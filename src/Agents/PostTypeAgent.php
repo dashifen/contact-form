@@ -7,6 +7,8 @@ use WP_Query;
 use Dashifen\Transformer\TransformerException;
 use Dashifen\WPHandler\Handlers\HandlerException;
 use Dashifen\WPHandler\Agents\AbstractPluginAgent;
+use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
+use Dashifen\WPHandler\Traits\FormattedDateTimeTrait;
 use Dashifen\WPHandler\Traits\PostMetaManagementTrait;
 use Dashifen\WPHandler\Traits\PostTypeRegistrationTrait;
 use Dashifen\ConscientiousContactForm\Repositories\Message;
@@ -24,6 +26,8 @@ class PostTypeAgent extends AbstractPluginAgent
 {
   use PostMetaManagementTrait;
   use PostTypeRegistrationTrait;
+  use FormattedDateTimeTrait;
+  use ActionAndNonceTrait;
   
   // WP core puts an arbitrary maximum length of 20 on the names of post types.
   // therefore, we can't use our SLUG in the post type name.  instead, we'll
@@ -47,25 +51,35 @@ class PostTypeAgent extends AbstractPluginAgent
    */
   public function initialize(): void
   {
-    $settingsAgent = $this->handler->getSettingsAgent();
-    $defaultHandler = $settingsAgent->getDefaultValue('submission-handler');
-    $submissionHandler = $settingsAgent->getOption('submission-handler', $defaultHandler);
-    if ($submissionHandler !== 'email') {
-      
-      // if the current settings of this plugin indicate that the database is
-      // involved in the storing and reviewing of our form responses, then we
-      // need to prep the post type that handles them.
-      
-      $this->addAction('init', 'registerPostType');
-      $this->addAction('init', 'registerPostStatuses');
-      $this->addAction('admin_menu', 'showUnreadCount');
-      $this->addFilter('add_menu_classes', 'alterMenuClasses');
-      $this->addAction('admin_enqueue_scripts', 'addAdminAssets');
-      $this->addFilter('manage_' . self::POST_TYPE . '_posts_columns', 'addResponseColumns');
-      $this->addFilter('manage_' . self::POST_TYPE . '_posts_custom_column', 'addResponseColumnData', 10, 2);
-      $this->addFilter('pre_get_posts', 'addCustomStatusToAllView');
-      $this->addFilter('post_row_actions', 'controlRowActions', 10, 2);
-      $this->addAction('admin_footer', 'addModalMarkup');
+    if (is_admin()) {
+      $settingsAgent = $this->handler->getSettingsAgent();
+      $defaultHandler = $settingsAgent->getDefaultValue('submission-handler');
+      $submissionHandler = $settingsAgent->getOption('submission-handler', $defaultHandler);
+      if ($submissionHandler !== 'email') {
+        
+        // if the current settings of this plugin indicate that the database is
+        // involved in the storing and reviewing of our form responses, then we
+        // need to prep the post type that handles them.
+        
+        $this->addAction('init', 'registerPostType');
+        $this->addAction('init', 'registerPostStatuses');
+        $this->addAction('admin_menu', 'showUnreadCount');
+        $this->addFilter('add_menu_classes', 'alterMenuClasses');
+        $this->addAction('admin_enqueue_scripts', 'addAdminAssets');
+        $this->addFilter('manage_' . self::POST_TYPE . '_posts_columns', 'addResponseColumns');
+        $this->addFilter('manage_edit-' . self::POST_TYPE . '_sortable_columns', 'addSortableColumns');
+        $this->addAction('manage_' . self::POST_TYPE . '_posts_custom_column', 'addResponseColumnData', 10, 2);
+        $this->addFilter('pre_get_posts', 'addCustomStatusToAllView');
+        $this->addFilter('post_row_actions', 'addResponseActions', 10, 2);
+        $this->addAction('admin_action_toggle', 'toggleResponseStatus');
+        $this->addFilter('wp_untrash_post_status', 'restoreStatusAfterTrash', 10, 3);
+        
+        // the work of this attachment is so simple it's pointless to add it
+        // to a method below.  we just return an empty array to remove the
+        // bulk actions from our CPT's listing.
+        
+        $this->addFilter('bulk_actions-edit-' . self::POST_TYPE, fn() => []);
+      }
     }
   }
   
@@ -231,10 +245,6 @@ class PostTypeAgent extends AbstractPluginAgent
    */
   protected function addAdminAssets(): void
   {
-    if ($this->isResponseListing()) {
-      $this->enqueue('assets/modal-controls.min.js');
-    }
-  
     $this->enqueue('assets/styles/admin-general.css');
   }
   
@@ -259,22 +269,19 @@ class PostTypeAgent extends AbstractPluginAgent
    *
    * Adds the necessary custom columns to our response listing.
    *
-   * @param array $columns
-   *
    * @return array
-   * @throws HandlerException
-   * @throws TransformerException
    */
-  protected function addResponseColumns(array $columns): array
+  protected function addResponseColumns(): array
   {
-    // at the moment our responses don't get titles, so we'll remove that
-    // column.  then, we get the optional fields that have been added to our
-    // form and use them to create additional columns on-screen.,
+    // we want to print our own date information and the title appears as a
+    // part of the message column we add here.  therefore, we remove both of
+    // these default columns from the screen.  then we add our own date, the
+    // column for our optional fields, and then, finally, our message.
     
-    unset($columns['title']);
-    foreach ($this->getOptionalFields() as $field) {
-      $columnName = $this->getColumnName($field);
-      $columns[$columnName] = $field === 'name' ? 'From' : ucfirst($field);
+    foreach (['date', 'from', 'status', 'message'] as $column) {
+      $columns[$this->getColumnName($column)] = $column === 'status'
+        ? '<span class="screen-reader-text">' . ucfirst($column) . '</span>'
+        : ucfirst($column);
     }
     
     return $columns;
@@ -292,10 +299,9 @@ class PostTypeAgent extends AbstractPluginAgent
    */
   private function getOptionalFields(): array
   {
-    return $this->handler->getSettingsAgent()->getOption(
-      'optional-fields',
-      SettingsValidator::OPTIONAL_FIELDS
-    );
+    $settingsAgent = $this->handler->getSettingsAgent();
+    $defaultFields = $settingsAgent->getDefaultValue('optional-fields');
+    return $settingsAgent->getOption('optional-fields', $defaultFields);
   }
   
   /**
@@ -329,6 +335,19 @@ class PostTypeAgent extends AbstractPluginAgent
   }
   
   /**
+   * addSortableColumns
+   *
+   * Adds our custom date column to the list of columns by which you can sort
+   * form responses.
+   *
+   * @return array
+   */
+  protected function addSortableColumns(): array
+  {
+    return [$this->getColumnName('date') => 'post_date'];
+  }
+  
+  /**
    * addResponseColumnData
    *
    * Given the name of a column, determines the information that should be
@@ -343,17 +362,52 @@ class PostTypeAgent extends AbstractPluginAgent
    */
   protected function addResponseColumnData(string $column, int $postId): void
   {
-    foreach ($this->getOptionalFields() as $field) {
-      if ($column === $this->getColumnName($field)) {
+    switch ($column) {
+      case $this->getColumnName('message'):
+        // our message is the post's content.  typically, this wouldn't be on
+        // the listing page, but this isn't a typical CPT.  using a <details>
+        // element in this way allows us to show the message's title and then
+        // it's contents in one cell.  notice that we don't both to run the
+        // content through filters; what the visitor enters is what we get
+        // here.
         
-        // if our column matches the one we created in the method above, then
-        // we want to print the post meta for this post that matches our field.
-        // then we can break out of the loop because we know we won't match
-        // anything else.
+        $content = get_post_field('post_content', $postId);
+        $format = get_post_field('post_status', $postId) === 'unread'
+          ? '<details><summary><strong>%s</strong></summary>%s</details>'
+          : '<details><summary>%s</summary>%s</details>';
         
-        echo $this->getPostMeta($postId, $field);
+        echo sprintf($format, get_the_title($postId), $content);
         break;
-      }
+      
+      case $this->getColumnName('date'):
+        
+        // the default date column shows all sorts of stuff about the last
+        // modified time, etc.  we don't want that, so we'll just show the
+        // post's date as a formatted date time string.
+        
+        $postDate = get_post_field('post_date', $postId);
+        echo $this->getFormattedDateTime(strtotime($postDate));
+        break;
+      
+      case $this->getColumnName('status'):
+        /** @noinspection HtmlUnknownAttribute */
+        echo get_post_field('post_status', $postId) === 'read'
+          ? '<svg title="Read" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope-open-text" class="svg-inline--fa fa-envelope-open-text fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M176 216h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16H176c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16zm-16 80c0 8.84 7.16 16 16 16h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16H176c-8.84 0-16 7.16-16 16v16zm96 121.13c-16.42 0-32.84-5.06-46.86-15.19L0 250.86V464c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V250.86L302.86 401.94c-14.02 10.12-30.44 15.19-46.86 15.19zm237.61-254.18c-8.85-6.94-17.24-13.47-29.61-22.81V96c0-26.51-21.49-48-48-48h-77.55c-3.04-2.2-5.87-4.26-9.04-6.56C312.6 29.17 279.2-.35 256 0c-23.2-.35-56.59 29.17-73.41 41.44-3.17 2.3-6 4.36-9.04 6.56H96c-26.51 0-48 21.49-48 48v44.14c-12.37 9.33-20.76 15.87-29.61 22.81A47.995 47.995 0 0 0 0 200.72v10.65l96 69.35V96h320v184.72l96-69.35v-10.65c0-14.74-6.78-28.67-18.39-37.77z"></path></svg>'
+          : '<svg title="Unread" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" class="svg-inline--fa fa-envelope fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>';
+        break;
+      
+      case $this->getColumnName('from'):
+        
+        // the from column should show the information in our optional fields.
+        // most of it can be printed directly to the screen, but the email we
+        // want to wrap in a mailto: link.
+        
+        foreach ($this->getOptionalFields() as $field) {
+          $meta = $this->getPostMeta($postId, $field);
+          echo $field === 'email'
+            ? sprintf('<a href="mailto:%s">%s</a><br>', $meta, $meta)
+            : $meta . '<br>';
+        }
     }
   }
   
@@ -382,40 +436,101 @@ class PostTypeAgent extends AbstractPluginAgent
     return $query;
   }
   
-  protected function controlRowActions(array $actions, WP_Post $post): array
+  /**
+   * addResponseActions
+   *
+   * Adds either the Mark as Read or Mark as Unread actions for a given
+   * message.
+   *
+   * @param array   $actions
+   * @param WP_Post $post
+   *
+   * @return array
+   */
+  protected function addResponseActions(array $actions, WP_Post $post): array
   {
     if ($post->post_type === self::POST_TYPE) {
-      preg_match('/href="([^"]+)/', $actions['trash'], $matches);
-      $trashLink = $matches[1];
+      $nonce = $this->getNonce($action = 'toggle');
+      $nonceName = $this->getNonceName($action);
       
-      $myActions['view'] = <<< LINK
-        <a class="view-message"
-          data-trash="$trashLink"
-          data-post-id="$post->ID"
-          href="#"
-        >View</a>
-LINK;
+      // the two adjacent percents within our tag are intentional.  it allows
+      // us to cram the link, ID, and nonce into the format during the first
+      // sprintf call which converts %%s to %s.  then, the second call within
+      // the ternary statement will replace that final %s with the correct
+      // description of our action.
+      
+      /** @noinspection HtmlUnknownTarget */
+      
+      $format = '<a href="%s?post=%d&action=toggle&%s=%s">%%s</a>';
+      $partial = sprintf($format, admin_url('admin.php'), $post->ID, $nonceName, $nonce);
+      $myActions['toggle'] = $post->post_status === 'read'
+        ? sprintf($partial, 'Mark as Unread')
+        : sprintf($partial, 'Mark as Read');
+      
+      // putting our action first makes puts it before the trash action in
+      // the array.
+      
+      $actions = array_merge($myActions, $actions);
     }
     
-    return array_merge($myActions ?? [], $actions);
+    return $actions;
   }
   
-  protected function addModalMarkup(): void
+  /**
+   * toggleResponseStatus
+   *
+   * This method switches a response from the unread to the read status or
+   * vice versa depending on its current status.  Then, it redirects back to
+   * the referrer.
+   *
+   * @return void
+   */
+  protected function toggleResponseStatus(): void
   {
-    echo <<< MODAL
-      <div id="modal" aria-hidden="true">
-        <div tabindex="-1" data-micromodal-close>
-          <div role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <header>
-              <h2 id="modal-title">Title</h2>
-              <button aria-label="Close modal" data-micromodal-close></button>
-            </header>
-            
-            <p id="modal-content">Modal Content</p>
-          </div>
-        </div>
-      </div>
-MODAL;
+    // remember, the isValidActionAndNonce function will either return true
+    // or die.  therefore, we can put the entirety of our method's work within
+    // the if-block and it'll execute as long as our request is valid.
+    
+    if ($this->isValidActionAndNonce('toggle')) {
+      if (($postId = $_GET['post'] ?? null) !== null) {
+        $status = get_post_field('post_status', $postId) === 'read' ? 'unread' : 'read';
+        wp_update_post(['ID' => $postId, 'post_status' => $status]);
+        wp_safe_redirect($_SERVER['HTTP_REFERER']);
+        
+        // now that we've redirected, we need to halt the execution of this
+        // request.  otherwise, it's possible that, as the server finishes it,
+        // it could try to send more data to the client and we don't want that.
+        
+        exit;
+      }
+      
+      // if we're still executing this request then we couldn't find our post
+      // ID.  without that, we can't really do anything other then die.
+      
+      wp_die('Something went wrong: unable to identify post.');
+    }
+  }
+  
+  /**
+   * restoreStatusAfterTrash
+   *
+   * After WP 5.6, untrashed posts receive the draft status.  This method makes
+   * sure that, for our post type, the original read or unread status is
+   * restored to such posts.
+   *
+   * @param string $status
+   * @param int    $postId
+   * @param string $oldStatus
+   *
+   * @return string
+   */
+  protected function restoreStatusAfterTrash(string $status, int $postId, string $oldStatus): string
+  {
+    if (get_post_field('post_type', $postId) === self::POST_TYPE) {
+      $status = $oldStatus;
+    }
+    
+    return $status;
   }
   
   /**
@@ -436,27 +551,38 @@ MODAL;
   {
     $postId = wp_insert_post(
       [
+        'post_title'   => $message->subject,
         'post_content' => $message->message,
         'post_type'    => self::POST_TYPE,
         'post_status'  => 'unread',
       ]
     );
     
-    $settingsAgent = $this->handler->getSettingsAgent();
-    $defaultFields = $settingsAgent->getDefaultValue('optional-fields');
-    $chosenFields = $settingsAgent->getOption('optional-fields', $defaultFields);
-    foreach ($chosenFields as $field) {
+    // now that our post exists in the database, we'll want to save the
+    // metadata about it.  we can get the set of chosen optional fields that
+    // can be provided with a message from our SettingsAgent.  then, we loop
+    // over them and save the non-empty ones in the database.
+    
+    foreach ($this->getOptionalFields() as $field) {
       if (!empty($message->{$field})) {
         $this->updatePostMeta($postId, $field, $message->{$field});
       }
     }
+    
+    // last thing we save is the visitor's IP address.  this may be used at
+    // some point to block spam coming from the same IP, we'll see.  it seems
+    // like it might be useful, so we'll make sure it's available from the get
+    // go.
+    
+    $this->updatePostMeta($postId, 'ip', $_SERVER['REMOTE_ADDR']);
   }
   
   /**
    * getPostMetaNames
    *
-   * Returns an array of valid post meta names for use within the
-   * isPostMetaValid method.
+   * Inherited from the PostMetaManagementTrait, this method returns an array
+   * of valid post meta keys to ensure that this object only changes the data
+   * associated with them.
    *
    * @return array
    */
@@ -468,6 +594,28 @@ MODAL;
     // them up.  so, we can use that constant as follows to define the post
     // meta that this object manages.
     
-    return SettingsValidator::OPTIONAL_FIELDS;
+    $optionalFields = SettingsValidator::OPTIONAL_FIELDS;
+    return array_merge($optionalFields, ['ip', 'pre-trash-status']);
   }
+  
+  /**
+   * getCapabilityForAction
+   *
+   * Inherited from the ActionAndNonceTrait, this method, given the name of an
+   * action this visitor is attempting to perform, returns the WP capability
+   * necessary to do so.  In this case, we return the name of our custom
+   * capability regardless of the action, hence the @noinspection override.
+   *
+   *
+   * @param string $action
+   *
+   * @return string
+   * @noinspection PhpUnusedParameterInspection
+   */
+  protected function getCapabilityForAction(string $action): string
+  {
+    return self::CAPABILITY;
+  }
+  
+  
 }

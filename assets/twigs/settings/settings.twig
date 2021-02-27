@@ -75,7 +75,7 @@
     </table>
 
     <input type="hidden" name="action" value="{{ action }}">
-    {{ function('wp_nonce_field', action, nonce, true, false) }}
+    {{ function('wp_nonce_field', action, nonceName, true, false) }}
     <input type="submit" value="Save Form Settings" class="button button-primary">
   </form>
 </section>

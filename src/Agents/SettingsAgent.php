@@ -30,14 +30,7 @@ class SettingsAgent extends AbstractPluginAgent
 {
   use CaseChangingTrait;
   use OptionsManagementTrait;
-  use ActionAndNonceTrait {
-    
-    // we want to call the trait's getAction method from within the overridden
-    // version we use herein.  to do so, we need to give the trait's method an
-    // alias as follows.  then, we can refer to that alias in our override.
-    
-    getAction as getTraitAction;
-  }
+  use ActionAndNonceTrait;
   
   private array $defaultOptionValues;
   private ValidatorInterface $validator;
@@ -146,26 +139,6 @@ class SettingsAgent extends AbstractPluginAgent
       $this->addAction('admin_menu', 'addFormSettings');
       $this->addAction('admin_post_' . $this->getAction(), 'saveFormSettings');
     }
-  }
-  
-  /**
-   * getAction
-   *
-   * Returns a string naming the action an on screen form is used to perform.
-   * Typically, this is then used to link a form's submission to a method of
-   * the object using this trait to process a visitor's work.
-   *
-   * @param string|null $action
-   *
-   * @return string
-   */
-  protected function getAction(?string $action = null): string
-  {
-    // by default, our trait's method would return 'settings-agent-$action'
-    // as our string.  but, this override adds our option prefix to that to be
-    // sure that settings agent actions in other plugins don't interfere.
-    
-    return $this->getOptionNamePrefix() . $this->getTraitAction($action);
   }
   
   /**
@@ -285,8 +258,8 @@ class SettingsAgent extends AbstractPluginAgent
   protected function showFormSettings(): void
   {
     $context = [
-      'nonce'     => $this->getNonce(),
       'action'    => $this->getAction(),
+      'nonceName' => $this->getNonceName(),
       'fields'    => $this->getOptionalFields(),
       'handlers'  => $this->getSubmissionHandlers(),
       'recipient' => $this->getOption('recipient', $this->getDefaultValue('recipient')),

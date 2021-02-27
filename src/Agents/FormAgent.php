@@ -25,14 +25,7 @@ class FormAgent extends AbstractPluginAgent
 {
   use CaseChangingTrait;
   use GetPageBySlugTrait;
-  use ActionAndNonceTrait {
-    
-    // we want to call the trait's getAction method from within the overridden
-    // version we use herein.  to do so, we need to give the trait's method an
-    // alias as follows.  then, we can refer to that alias in our override.
-    
-    getAction as getTraitAction;
-  }
+  use ActionAndNonceTrait;
   
   public const TEMPLATE_NAME = 'Contact Form Template';
   public const TEMPLATE_FILE = 'conscientious-contact-form.php';
@@ -58,7 +51,7 @@ class FormAgent extends AbstractPluginAgent
       // one for logged-in users.  that's intentional; an authentic user using
       // the form might be odd, but it shouldn't be prevented.
       
-      $action = $this->getAction();
+      $action = $this->getAction('submit');
       $this->addAction('admin_post_nopriv_' . $action, 'processForm');
       $this->addAction('admin_post_' . $action, 'processForm');
       
@@ -70,28 +63,6 @@ class FormAgent extends AbstractPluginAgent
       
       $this->addAction('display-conscientious-contact-form', 'displayForm');
     }
-  }
-  
-  /**
-   * getAction
-   *
-   * Returns a string naming the action an on screen form is used to perform.
-   * Typically, this is then used to link a form's submission to a method of
-   * the object using this trait to process a visitor's work.
-   *
-   * @param string|null $action
-   *
-   * @return string
-   */
-  protected function getAction(?string $action = null): string
-  {
-    // FormAgent is a general enough name that it's possible that it might be
-    // used again elsewhere.  thus, an action based solely on its name may not
-    // be unique enough to prevent unintended consequences.  therefore, we'll
-    // prefix our action with the post meta name prefix from our handler which
-    // will make it much more unique.
-    
-    return ConscientiousContactForm::SLUG . '-' . $this->getTraitAction($action);
   }
   
   /**
@@ -268,8 +239,8 @@ class FormAgent extends AbstractPluginAgent
       $context[$camelField] = $settingsAgent->getOption($settings, $value);
     }
     
-    $context['nonce'] = $this->getNonce();
-    $context['action'] = $this->getAction();
+    $context['action'] = $this->getAction('submit');
+    $context['nonceName'] = $this->getNonce('submit');
     Timber::render('conscientious-contact-form.twig', $context ?? []);
   }
   

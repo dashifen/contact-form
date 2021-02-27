@@ -40,8 +40,11 @@ class Message extends Repository
     // filter our data so that it is limited to only those field/value pairs
     // that match what this repository stores.
     
-    $data = array_filter($data, fn($datum) => property_exists($this, $datum), ARRAY_FILTER_USE_KEY);
-    parent::__construct($data);
+    parent::__construct(array_filter(
+      $data,
+      fn($datum) => property_exists($this, $datum),
+      ARRAY_FILTER_USE_KEY
+    ));
   }
   
   /**
@@ -54,7 +57,7 @@ class Message extends Repository
    */
   protected function getRequiredProperties(): array
   {
-    return ['message'];
+    return ['subject', 'message'];
   }
   
   /**

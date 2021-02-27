@@ -2,7 +2,7 @@
   <ol class="ccf-form-items">
     {% for field in optionalFields %}
       {% set id = function('uniqid') %}
-      <li class="ccf-form-item ccf-optional-form-item">
+      <li class="ccf-form-item ccf-single-line-form-item">
         <label class="ccf-form-label" for="{{ id }}">Your {{ field | capitalize }}:</label>
         <input class="ccf-form-input" id="{{ id }}" name="{{ field }}"
           {% if field == 'email' %}
@@ -17,8 +17,13 @@
       </li>
     {% endfor %}
 
-    <li class="ccf-form-item ccf-required-form-item">
-      <label class="ccf-form-label" for="message">Enter your message:</label>
+    <li class="ccf-form-item ccf-single-line-form-item">
+      <label class="ccf-form-label" for="subject">Your Subject:</label>
+      <input type="text" id="subject" name="subject" class="ccf-form-input" aria-required="true" required>
+    </li>
+
+    <li class="ccf-form-item ccf-multi-line-form-item">
+      <label class="ccf-form-label" for="message">Your message:</label>
       <textarea class="ccf-form-textarea" id="message" name="message" rows="7" cols="35" aria-required="true" required></textarea>
     </li>
   </ol>
@@ -34,6 +39,6 @@
   </aside>
 
   <input type="hidden" name="action" value="{{ action }}">
-  {{ function('wp_nonce_field', action, nonce, true, false) }}
+  {{ function('wp_nonce_field', action, nonceName, true, false) }}
   <input type="submit" value="Send Message" class="ccf-form-submit">
 </form>

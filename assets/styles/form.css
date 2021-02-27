@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-.ccf-optional-form-item {
+.ccf-single-line-form-item {
     display: grid;
     grid-template-columns: 20% 80%;
     margin-bottom: .5rem;
