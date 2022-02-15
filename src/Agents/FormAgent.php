@@ -242,9 +242,10 @@ class FormAgent extends AbstractPluginAgent
     $context['action'] = $this->getAction('submit');
     $context['nonceName'] = $this->getNonce('submit');
     
-    // we add this filter here in case additional classes need to be added to
-    // the submit button, e.g. the reCAPTCHA v3 classes.
+    // we add these filters here in case additional classes or attributes need
+    // to be added to the submit button, e.g. the reCAPTCHA v3 data.
     
+    $context['submit_attrs'] = apply_filters('ccf-submit-attributes', '');
     $context['submit_classes'] = apply_filters('ccf-submit-classes', 'ccf-form-submit');
     Timber::render('conscientious-contact-form.twig', $context ?? []);
   }

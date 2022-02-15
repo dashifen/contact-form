@@ -40,5 +40,7 @@
 
   <input type="hidden" name="action" value="{{ action }}">
   {{ function('wp_nonce_field', action, nonceName, true, false) }}
-  <button type="submit" class="{{ submit_classes }}">Send Message</button>
+  <button type="submit" {{ submit_attrs }} class="{{ submit_classes }}">
+    Send Message
+  </button>
 </form>
