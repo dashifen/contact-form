@@ -8,6 +8,8 @@
  * Version: 2.3.0
  */
 
+namespace Dashifen\WordPress\Plugins;
+
 use Dashifen\Exception\Exception;
 use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\FormAgent;
 use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\SettingsAgent;
