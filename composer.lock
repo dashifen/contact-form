@@ -4,101 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f9a82512a363ae8e93c12e95cea0991",
+    "content-hash": "cb0685c520e33e41494da8a11ca8820c",
     "packages": [
         {
-            "name": "altorouter/altorouter",
-            "version": "v1.2.0",
+            "name": "dashifen/case-changing-trait",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dannyvankooten/AltoRouter.git",
-                "reference": "39c50092470128c12284d332bb57f306bb5b58e4"
+                "url": "https://github.com/dashifen/case-changing-trait.git",
+                "reference": "950e54a87a77f0fc960ad4c2d3e43e4cde04e144"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dannyvankooten/AltoRouter/zipball/39c50092470128c12284d332bb57f306bb5b58e4",
-                "reference": "39c50092470128c12284d332bb57f306bb5b58e4",
+                "url": "https://api.github.com/repos/dashifen/case-changing-trait/zipball/950e54a87a77f0fc960ad4c2d3e43e4cde04e144",
+                "reference": "950e54a87a77f0fc960ad4c2d3e43e4cde04e144",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "dev-master",
-                "phpunit/phpunit": "4.5.*"
+                "php": ">= 7.4"
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "AltoRouter.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Danny van Kooten",
-                    "email": "dannyvankooten@gmail.com",
-                    "homepage": "http://dannyvankooten.com/"
-                },
-                {
-                    "name": "Koen Punt",
-                    "homepage": "https://github.com/koenpunt"
-                },
-                {
-                    "name": "niahoo",
-                    "homepage": "https://github.com/niahoo"
-                }
-            ],
-            "description": "A lightning fast router for PHP",
-            "homepage": "https://github.com/dannyvankooten/AltoRouter",
-            "keywords": [
-                "lightweight",
-                "router",
-                "routing"
-            ],
-            "support": {
-                "issues": "https://github.com/dannyvankooten/AltoRouter/issues",
-                "source": "https://github.com/dannyvankooten/AltoRouter/tree/master"
-            },
-            "time": "2015-11-30T00:47:43+00:00"
-        },
-        {
-            "name": "asm89/twig-cache-extension",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/asm89/twig-cache-extension.git",
-                "reference": "13787226956ec766f4770722082288097aebaaf3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/asm89/twig-cache-extension/zipball/13787226956ec766f4770722082288097aebaaf3",
-                "reference": "13787226956ec766f4770722082288097aebaaf3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "twig/twig": "^1.0|^2.0"
-            },
-            "require-dev": {
-                "doctrine/cache": "~1.0",
-                "phpunit/phpunit": "^5.0 || ^4.8.10"
-            },
-            "suggest": {
-                "psr/cache-implementation": "To make use of PSR-6 cache implementation via PsrCacheAdapter."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
                 "psr-4": {
-                    "": "lib/"
+                    "Dashifen\\CaseChangingTrait\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -107,188 +35,35 @@
             ],
             "authors": [
                 {
-                    "name": "Alexander",
-                    "email": "iam.asm89@gmail.com"
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
                 }
             ],
-            "description": "Cache fragments of templates directly within Twig.",
-            "homepage": "https://github.com/asm89/twig-cache-extension",
-            "keywords": [
-                "cache",
-                "extension",
-                "twig"
-            ],
+            "description": "A PHP trait that converts between common programming character cases.",
             "support": {
-                "issues": "https://github.com/asm89/twig-cache-extension/issues",
-                "source": "https://github.com/asm89/twig-cache-extension/tree/1.4.0"
+                "issues": "https://github.com/dashifen/case-changing-trait/issues",
+                "source": "https://github.com/dashifen/case-changing-trait/tree/1.0.1"
             },
-            "abandoned": "twig/cache-extension",
-            "time": "2020-01-01T20:47:37+00:00"
-        },
-        {
-            "name": "composer/installers",
-            "version": "v1.10.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/composer/installers.git",
-                "reference": "1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d",
-                "reference": "1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0"
-            },
-            "replace": {
-                "roundcube/plugin-installer": "*",
-                "shama/baton": "*"
-            },
-            "require-dev": {
-                "composer/composer": "1.6.* || ^2.0",
-                "composer/semver": "^1 || ^3",
-                "phpstan/phpstan": "^0.12.55",
-                "phpstan/phpstan-phpunit": "^0.12.16",
-                "symfony/phpunit-bridge": "^4.2 || ^5",
-                "symfony/process": "^2.3"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Composer\\Installers\\Plugin",
-                "branch-alias": {
-                    "dev-main": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Composer\\Installers\\": "src/Composer/Installers"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kyle Robinson Young",
-                    "email": "kyle@dontkry.com",
-                    "homepage": "https://github.com/shama"
-                }
-            ],
-            "description": "A multi-framework Composer library installer",
-            "homepage": "https://composer.github.io/installers/",
-            "keywords": [
-                "Craft",
-                "Dolibarr",
-                "Eliasis",
-                "Hurad",
-                "ImageCMS",
-                "Kanboard",
-                "Lan Management System",
-                "MODX Evo",
-                "MantisBT",
-                "Mautic",
-                "Maya",
-                "OXID",
-                "Plentymarkets",
-                "Porto",
-                "RadPHP",
-                "SMF",
-                "Starbug",
-                "Thelia",
-                "Whmcs",
-                "WolfCMS",
-                "agl",
-                "aimeos",
-                "annotatecms",
-                "attogram",
-                "bitrix",
-                "cakephp",
-                "chef",
-                "cockpit",
-                "codeigniter",
-                "concrete5",
-                "croogo",
-                "dokuwiki",
-                "drupal",
-                "eZ Platform",
-                "elgg",
-                "expressionengine",
-                "fuelphp",
-                "grav",
-                "installer",
-                "itop",
-                "joomla",
-                "known",
-                "kohana",
-                "laravel",
-                "lavalite",
-                "lithium",
-                "magento",
-                "majima",
-                "mako",
-                "mediawiki",
-                "modulework",
-                "modx",
-                "moodle",
-                "osclass",
-                "phpbb",
-                "piwik",
-                "ppi",
-                "processwire",
-                "puppet",
-                "pxcms",
-                "reindex",
-                "roundcube",
-                "shopware",
-                "silverstripe",
-                "sydes",
-                "sylius",
-                "symfony",
-                "typo3",
-                "wordpress",
-                "yawik",
-                "zend",
-                "zikula"
-            ],
-            "support": {
-                "issues": "https://github.com/composer/installers/issues",
-                "source": "https://github.com/composer/installers/tree/v1.10.0"
-            },
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-01-14T11:07:16+00:00"
+            "time": "2021-04-07T12:54:46+00:00"
         },
         {
             "name": "dashifen/collection",
-            "version": "2.0.2",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/collection.git",
-                "reference": "b73a627dc0bec89619dbaa080c3a6a92808bb484"
+                "reference": "3b65c12609f03ff8a6be236f18b81b0c673c1738"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/collection/zipball/b73a627dc0bec89619dbaa080c3a6a92808bb484",
-                "reference": "b73a627dc0bec89619dbaa080c3a6a92808bb484",
+                "url": "https://api.github.com/repos/dashifen/collection/zipball/3b65c12609f03ff8a6be236f18b81b0c673c1738",
+                "reference": "3b65c12609f03ff8a6be236f18b81b0c673c1738",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "dashifen/exception": "^1.2",
+                "php": ">=8.2"
             },
             "type": "project",
             "autoload": {
@@ -310,23 +85,26 @@
             "description": "An abstract object from which concrete collections can be built.",
             "support": {
                 "issues": "https://github.com/dashifen/collection/issues",
-                "source": "https://github.com/dashifen/collection/tree/2.0.2"
+                "source": "https://github.com/dashifen/collection/tree/3.0.0"
             },
-            "time": "2021-01-27T02:44:23+00:00"
+            "time": "2023-09-02T17:16:06+00:00"
         },
         {
             "name": "dashifen/debugging",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/debugging.git",
-                "reference": "6898e2ab451b4e6d8e3825d65223181c8351eaa2"
+                "reference": "9a056f0eec793bef17aacf879e915e25c33fc952"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/debugging/zipball/6898e2ab451b4e6d8e3825d65223181c8351eaa2",
-                "reference": "6898e2ab451b4e6d8e3825d65223181c8351eaa2",
+                "url": "https://api.github.com/repos/dashifen/debugging/zipball/9a056f0eec793bef17aacf879e915e25c33fc952",
+                "reference": "9a056f0eec793bef17aacf879e915e25c33fc952",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
             },
             "type": "library",
             "autoload": {
@@ -348,22 +126,22 @@
             "description": "A PHP Trait that defines static methods used for on-screen debugging.",
             "support": {
                 "issues": "https://github.com/dashifen/debugging/issues",
-                "source": "https://github.com/dashifen/debugging/tree/1.0.1"
+                "source": "https://github.com/dashifen/debugging/tree/1.0.2"
             },
-            "time": "2020-12-09T19:27:09+00:00"
+            "time": "2024-01-08T14:24:44+00:00"
         },
         {
             "name": "dashifen/exception",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/exception.git",
-                "reference": "e795e1d973e9f781eb3a8371b6299c852eef9bc1"
+                "reference": "b57568029d4a99a4c875d6f96220739ccda8eec1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/exception/zipball/e795e1d973e9f781eb3a8371b6299c852eef9bc1",
-                "reference": "e795e1d973e9f781eb3a8371b6299c852eef9bc1",
+                "url": "https://api.github.com/repos/dashifen/exception/zipball/b57568029d4a99a4c875d6f96220739ccda8eec1",
+                "reference": "b57568029d4a99a4c875d6f96220739ccda8eec1",
                 "shasum": ""
             },
             "require": {
@@ -390,28 +168,28 @@
             "description": "a base class for exceptions in Dashifen's other work",
             "support": {
                 "issues": "https://github.com/dashifen/exception/issues",
-                "source": "https://github.com/dashifen/exception/tree/1.2.0"
+                "source": "https://github.com/dashifen/exception/tree/1.2.1"
             },
-            "time": "2019-12-12T14:26:49+00:00"
+            "time": "2025-01-02T17:24:05+00:00"
         },
         {
             "name": "dashifen/repository",
-            "version": "3.0.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/repository.git",
-                "reference": "83ce68039cc5c0cae1c35c3da80d9d3e23b57d37"
+                "reference": "032cde0eaf6283377816cae340c84b299d6de779"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/repository/zipball/83ce68039cc5c0cae1c35c3da80d9d3e23b57d37",
-                "reference": "83ce68039cc5c0cae1c35c3da80d9d3e23b57d37",
+                "url": "https://api.github.com/repos/dashifen/repository/zipball/032cde0eaf6283377816cae340c84b299d6de779",
+                "reference": "032cde0eaf6283377816cae340c84b299d6de779",
                 "shasum": ""
             },
             "require": {
+                "dashifen/case-changing-trait": "^1",
                 "dashifen/exception": "^1",
-                "ext-json": "*",
-                "php": ">=7.4"
+                "php": ">=8.2"
             },
             "type": "library",
             "autoload": {
@@ -421,7 +199,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "WTFPL"
+                "MIT"
             ],
             "authors": [
                 {
@@ -430,12 +208,12 @@
                     "role": "developer"
                 }
             ],
-            "description": "An object with read-only protected properties from which other objects can be extened.",
+            "description": "An object with read-only protected properties from which other objects can be extended.",
             "support": {
                 "issues": "https://github.com/dashifen/repository/issues",
-                "source": "https://github.com/dashifen/repository/tree/master"
+                "source": "https://github.com/dashifen/repository/tree/4.0.0"
             },
-            "time": "2020-07-29T15:21:59+00:00"
+            "time": "2023-09-05T17:51:39+00:00"
         },
         {
             "name": "dashifen/transformer",
@@ -481,23 +259,23 @@
         },
         {
             "name": "dashifen/validator",
-            "version": "2.2.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/validator.git",
-                "reference": "a6568f8c4958167295d581a27dbe24f783838056"
+                "reference": "85fb01586d21cf108f14f7e3d41fbfa23040ea18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/validator/zipball/a6568f8c4958167295d581a27dbe24f783838056",
-                "reference": "a6568f8c4958167295d581a27dbe24f783838056",
+                "url": "https://api.github.com/repos/dashifen/validator/zipball/85fb01586d21cf108f14f7e3d41fbfa23040ea18",
+                "reference": "85fb01586d21cf108f14f7e3d41fbfa23040ea18",
                 "shasum": ""
             },
             "require": {
                 "dashifen/exception": "^1",
                 "ext-fileinfo": "*",
-                "php": ">=7.3",
-                "ralouphie/mimey": "^2"
+                "fileeye/mimemap": "^1.1",
+                "php": ">=7.3"
             },
             "suggest": {
                 "ext-fileinfo": "*"
@@ -520,23 +298,23 @@
             ],
             "description": "An interface and abstract class useful for the production of objects which validate data.",
             "support": {
-                "source": "https://github.com/dashifen/validator/tree/2.2.1",
+                "source": "https://github.com/dashifen/validator/tree/3.0.0",
                 "issues": "https://github.com/dashifen/validator/issues"
             },
-            "time": "2021-02-22T13:26:51+00:00"
+            "time": "2021-08-26T18:05:35+00:00"
         },
         {
             "name": "dashifen/wp-debugging",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/wp-debugging.git",
-                "reference": "aa461ad9c36283466bd120660ff7a7c68eb521b0"
+                "reference": "d4cc5c6d1736a8ac909c60cf866b564d0779e9bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/wp-debugging/zipball/aa461ad9c36283466bd120660ff7a7c68eb521b0",
-                "reference": "aa461ad9c36283466bd120660ff7a7c68eb521b0",
+                "url": "https://api.github.com/repos/dashifen/wp-debugging/zipball/d4cc5c6d1736a8ac909c60cf866b564d0779e9bf",
+                "reference": "d4cc5c6d1736a8ac909c60cf866b564d0779e9bf",
                 "shasum": ""
             },
             "require": {
@@ -562,31 +340,34 @@
             "description": "A PHP trait that can be used by other objects for on-screen debugging within a WordPress environment.",
             "support": {
                 "issues": "https://github.com/dashifen/wp-debugging/issues",
-                "source": "https://github.com/dashifen/wp-debugging/tree/1.0.1"
+                "source": "https://github.com/dashifen/wp-debugging/tree/1.0.2"
             },
-            "time": "2020-12-09T19:29:51+00:00"
+            "time": "2023-09-19T18:25:25+00:00"
         },
         {
             "name": "dashifen/wp-handler",
-            "version": "10.3.2",
+            "version": "11.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/wp-handler.git",
-                "reference": "bfcc8816b90ad69995eb17c7255f4cd374273086"
+                "reference": "c8ac128dab81d09cd0286b9d9e097432ef46a22a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/wp-handler/zipball/bfcc8816b90ad69995eb17c7255f4cd374273086",
-                "reference": "bfcc8816b90ad69995eb17c7255f4cd374273086",
+                "url": "https://api.github.com/repos/dashifen/wp-handler/zipball/c8ac128dab81d09cd0286b9d9e097432ef46a22a",
+                "reference": "c8ac128dab81d09cd0286b9d9e097432ef46a22a",
                 "shasum": ""
             },
             "require": {
-                "dashifen/collection": "^2",
+                "dashifen/collection": "^3",
                 "dashifen/exception": "^1",
-                "dashifen/repository": "^3",
+                "dashifen/repository": "^4",
                 "dashifen/transformer": "^2",
                 "dashifen/wp-debugging": "^1",
-                "php": ">=7.4"
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "wp-cli/wp-cli": "^2.5"
             },
             "type": "project",
             "autoload": {
@@ -608,36 +389,101 @@
             "description": "An object to define handlers for various WordPress action and filter hooks using protected methods. ",
             "support": {
                 "issues": "https://github.com/dashifen/wp-handler/issues",
-                "source": "https://github.com/dashifen/wp-handler/tree/10.3.2"
+                "source": "https://github.com/dashifen/wp-handler/tree/11.0.8"
             },
-            "time": "2021-02-27T12:13:43+00:00"
+            "time": "2025-01-09T17:49:59+00:00"
         },
         {
-            "name": "ralouphie/mimey",
-            "version": "2.1.0",
+            "name": "fileeye/mimemap",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ralouphie/mimey.git",
-                "reference": "8f74e6da73f9df7bd965e4e123f3d8fb9acb89ba"
+                "url": "https://github.com/FileEye/MimeMap.git",
+                "reference": "04dc1caf8d0a11a6f53494e284d261e7c9eb8eb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ralouphie/mimey/zipball/8f74e6da73f9df7bd965e4e123f3d8fb9acb89ba",
-                "reference": "8f74e6da73f9df7bd965e4e123f3d8fb9acb89ba",
+                "url": "https://api.github.com/repos/FileEye/MimeMap/zipball/04dc1caf8d0a11a6f53494e284d261e7c9eb8eb7",
+                "reference": "04dc1caf8d0a11a6f53494e284d261e7c9eb8eb7",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.4|^7.0"
+                "composer-runtime-api": "^2.0.0",
+                "php": ">=5.6"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "^1.1",
-                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5"
+                "phpunit/phpunit": "^5 | ^6 | ^7 | ^8 | ^9",
+                "sebastian/comparator": "*",
+                "sebastian/diff": "*",
+                "squizlabs/php_codesniffer": "*",
+                "symfony/console": "*",
+                "symfony/filesystem": "*",
+                "symfony/var-dumper": "*",
+                "symfony/yaml": "*"
             },
+            "bin": [
+                "bin/fileeye-mimemap"
+            ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "Mimey\\": "src/"
+                    "FileEye\\MimeMap\\": "src/"
                 }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "description": "A PHP library to handle MIME Content-Type fields and their related file extensions.",
+            "homepage": "https://github.com/FileEye/MimeMap",
+            "keywords": [
+                "mime",
+                "mime-database",
+                "mime-parser",
+                "mime-type"
+            ],
+            "support": {
+                "issues": "https://github.com/FileEye/MimeMap/issues",
+                "source": "https://github.com/FileEye/MimeMap/tree/1.2.2"
+            },
+            "time": "2022-04-30T12:59:34+00:00"
+        },
+        {
+            "name": "symfony/deprecation-contracts",
+            "version": "v3.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/deprecation-contracts.git",
+                "reference": "74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6",
+                "reference": "74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
+                "branch-alias": {
+                    "dev-main": "3.5-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "function.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -645,54 +491,72 @@
             ],
             "authors": [
                 {
-                    "name": "Ralph Khattar",
-                    "email": "ralph.khattar@gmail.com"
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "PHP package for converting file extensions to MIME types and vice versa.",
+            "description": "A generic function and convention to trigger deprecation notices",
+            "homepage": "https://symfony.com",
             "support": {
-                "issues": "https://github.com/ralouphie/mimey/issues",
-                "source": "https://github.com/ralouphie/mimey/tree/develop"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.5.1"
             },
-            "time": "2019-03-08T08:49:03+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-09-25T14:20:29+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.22.1",
+            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "c6c942b1ac76c82448322025e084cadc56048b4e"
+                "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/c6c942b1ac76c82448322025e084cadc56048b4e",
-                "reference": "c6c942b1ac76c82448322025e084cadc56048b4e",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/a3cc8b044a6ea513310cbd48ef7333b384945638",
+                "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=7.2"
+            },
+            "provide": {
+                "ext-ctype": "*"
             },
             "suggest": {
                 "ext-ctype": "For best performance"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "1.22-dev"
-                },
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -717,7 +581,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.22.1"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -733,45 +597,45 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-07T16:49:33+00:00"
+            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.22.1",
+            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1"
+                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/5232de97ee3b75b0360528dae24e73db49566ab1",
-                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/85181ba99b2345b0ef10ce42ecac37612d9fd341",
+                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=7.2"
+            },
+            "provide": {
+                "ext-mbstring": "*"
             },
             "suggest": {
                 "ext-mbstring": "For best performance"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "1.22-dev"
-                },
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -797,7 +661,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.22.1"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -813,45 +677,52 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-22T09:19:47+00:00"
+            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "timber/timber",
-            "version": "1.18.2",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "18766d1af8650ca919534cc497e7f0e8d82423a3"
+                "reference": "3f6e73feadf5d547dff4992f645805da7fbc4d3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/18766d1af8650ca919534cc497e7f0e8d82423a3",
-                "reference": "18766d1af8650ca919534cc497e7f0e8d82423a3",
+                "url": "https://api.github.com/repos/timber/timber/zipball/3f6e73feadf5d547dff4992f645805da7fbc4d3a",
+                "reference": "3f6e73feadf5d547dff4992f645805da7fbc4d3a",
                 "shasum": ""
             },
             "require": {
-                "asm89/twig-cache-extension": "~1.0",
-                "composer/installers": "~1.0",
-                "php": ">=5.3.0|7.*",
-                "twig/twig": "^1.41|^2.10",
-                "upstatement/routes": "0.5"
+                "php": "^8.1",
+                "twig/twig": "^3.17"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-                "johnpbloch/wordpress": "*",
-                "phpunit/phpunit": "5.7.16|6.*",
-                "squizlabs/php_codesniffer": "3.*",
-                "wp-coding-standards/wpcs": "^2.0",
-                "wpackagist-plugin/advanced-custom-fields": "5.*",
-                "wpackagist-plugin/co-authors-plus": "3.2.*|3.4.*"
+                "ergebnis/composer-normalize": "^2.28",
+                "php-parallel-lint/php-parallel-lint": "^1.3",
+                "php-stubs/acf-pro-stubs": "^6.0",
+                "php-stubs/wp-cli-stubs": "^2.0",
+                "phpro/grumphp": "^2.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.7",
+                "phpunit/phpunit": "^9.0",
+                "rector/rector": "^1.0",
+                "squizlabs/php_codesniffer": "^3.0",
+                "symplify/easy-coding-standard": "^12.2",
+                "szepeviktor/phpstan-wordpress": "^1.1",
+                "twig/cache-extra": "^3.17",
+                "wpackagist-plugin/advanced-custom-fields": "^6.0",
+                "wpackagist-plugin/co-authors-plus": "^3.6",
+                "yoast/wp-test-utils": "^1.2"
             },
             "suggest": {
-                "satooshi/php-coveralls": "1.0.* for code coverage"
+                "php-coveralls/php-coveralls": "^2.0 for code coverage",
+                "twig/cache-extra": "For using the cache tag in Twig"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Timber\\": "lib/"
+                    "Timber\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -860,64 +731,89 @@
             ],
             "authors": [
                 {
-                    "name": "Jared Novack",
-                    "email": "jared@upstatement.com",
-                    "homepage": "http://upstatement.com"
+                    "name": "Erik van der Bas",
+                    "email": "erik@basedonline.nl",
+                    "homepage": "https://basedonline.nl"
                 },
                 {
-                    "name": "Connor J. Burton",
-                    "email": "connorjburton@gmail.com",
-                    "homepage": "http://connorburton.com"
+                    "name": "Lukas Gächter",
+                    "email": "lukas.gaechter@mind.ch",
+                    "homepage": "https://www.mind.ch"
+                },
+                {
+                    "name": "Nicolas Lemoine",
+                    "email": "nico@n5s.dev",
+                    "homepage": "https://n5s.dev"
+                },
+                {
+                    "name": "Jared Novack",
+                    "email": "jared@upstatement.com",
+                    "homepage": "https://upstatement.com"
+                },
+                {
+                    "name": "Timber Community",
+                    "homepage": "https://github.com/timber/timber"
                 }
             ],
-            "description": "Plugin to write WordPress themes w Object-Oriented Code and the Twig Template Engine",
-            "homepage": "http://timber.upstatement.com",
+            "description": "Create WordPress themes with beautiful OOP code and the Twig Template Engine",
+            "homepage": "https://timber.upstatement.com",
             "keywords": [
                 "templating",
                 "themes",
                 "timber",
-                "twig"
+                "twig",
+                "wordpress"
             ],
             "support": {
                 "docs": "https://timber.github.io/docs/",
                 "issues": "https://github.com/timber/timber/issues",
                 "source": "https://github.com/timber/timber"
             },
-            "time": "2020-10-11T15:08:40+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/timber",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/timber",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2024-12-23T13:04:50+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v2.14.3",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "8bc568d460d88b25c00c046256ec14a787ea60d9"
+                "reference": "3468920399451a384bef53cf7996965f7cd40183"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/8bc568d460d88b25c00c046256ec14a787ea60d9",
-                "reference": "8bc568d460d88b25c00c046256ec14a787ea60d9",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3468920399451a384bef53cf7996965f7cd40183",
+                "reference": "3468920399451a384bef53cf7996965f7cd40183",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
+                "php": ">=8.1.0",
+                "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/polyfill-ctype": "^1.8",
                 "symfony/polyfill-mbstring": "^1.3"
             },
             "require-dev": {
-                "psr/container": "^1.0",
-                "symfony/phpunit-bridge": "^4.4.9|^5.0.9"
+                "phpstan/phpstan": "^2.0",
+                "psr/container": "^1.0|^2.0",
+                "symfony/phpunit-bridge": "^5.4.9|^6.4|^7.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.14-dev"
-                }
-            },
             "autoload": {
-                "psr-0": {
-                    "Twig_": "lib/"
-                },
+                "files": [
+                    "src/Resources/core.php",
+                    "src/Resources/debug.php",
+                    "src/Resources/escaper.php",
+                    "src/Resources/string_loader.php"
+                ],
                 "psr-4": {
                     "Twig\\": "src/"
                 }
@@ -950,7 +846,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v2.14.3"
+                "source": "https://github.com/twigphp/Twig/tree/v3.20.0"
             },
             "funding": [
                 {
@@ -962,74 +858,18 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-05T15:34:33+00:00"
-        },
-        {
-            "name": "upstatement/routes",
-            "version": "0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Upstatement/routes.git",
-                "reference": "3267d28be0a73f197087d58384e1a358d85671b6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Upstatement/routes/zipball/3267d28be0a73f197087d58384e1a358d85671b6",
-                "reference": "3267d28be0a73f197087d58384e1a358d85671b6",
-                "shasum": ""
-            },
-            "require": {
-                "altorouter/altorouter": "^1.1.0",
-                "composer/installers": "~1.0",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "satooshi/php-coveralls": "dev-master",
-                "wp-cli/wp-cli": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Routes": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jared Novack",
-                    "email": "jared@upstatement.com",
-                    "homepage": "http://upstatement.com"
-                }
-            ],
-            "description": "Manage rewrites and routes in WordPress with this dead-simple plugin",
-            "homepage": "http://routes.upstatement.com",
-            "keywords": [
-                "redirects",
-                "rewrite",
-                "routes",
-                "routing"
-            ],
-            "support": {
-                "issues": "https://github.com/jarednova/routes/issues",
-                "source": "https://github.com/jarednova/routes",
-                "wiki": "https://github.com/jarednova/routes/wiki"
-            },
-            "time": "2018-12-04T01:13:41+00:00"
+            "time": "2025-02-13T08:34:43+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=8.2"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

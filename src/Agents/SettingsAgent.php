@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\ConscientiousContactForm\Agents;
+namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents;
 
 use Timber\Timber;
 use Dashifen\Validator\ValidatorInterface;
@@ -14,10 +14,10 @@ use Dashifen\WPHandler\Agents\AbstractPluginAgent;
 use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
 use Dashifen\WPHandler\Traits\OptionsManagementTrait;
 use Dashifen\WPHandler\Repositories\MenuItems\SubmenuItem;
-use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\ConscientiousContactForm;
 use Dashifen\WPHandler\Handlers\Plugins\PluginHandlerInterface;
 use Dashifen\WPHandler\Repositories\MenuItems\MenuItemException;
-use Dashifen\ConscientiousContactForm\Services\SettingsValidator;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Services\SettingsValidator;
 
 /**
  * Class SettingsAgent
@@ -54,7 +54,7 @@ class SettingsAgent extends AbstractPluginAgent
   /**
    * getDefaultValues
    *
-   * Returns the array of default values for each of this plugins settings.
+   * Returns the array of default values this plugin's settings.
    *
    * @return array
    */
@@ -120,7 +120,7 @@ class SettingsAgent extends AbstractPluginAgent
    *
    * @return mixed|null
    */
-  public function getDefaultValue(string $setting)
+  public function getDefaultValue(string $setting): mixed
   {
     return $this->getDefaultValues()[$setting] ?? null;
   }
@@ -178,7 +178,7 @@ class SettingsAgent extends AbstractPluginAgent
   {
     $this->addAction('admin_enqueue_scripts', 'addAssets');
     
-    // the other thing we need to do here is setup an admin notices action if
+    // the other thing we need to do here is set up an admin notices action if
     // we have a record of a prior post.  for that, we'll check the transient
     // that's set at the end of the save method below.
     
@@ -190,7 +190,7 @@ class SettingsAgent extends AbstractPluginAgent
       // want to use it to share a success or failure message with the visitor.
       // then we remove the transient so we only do so once per post action.
       // even without the transient, the validity information will be available
-      // during the admin_notices action due to it's use via closure in the
+      // during the admin_notices action due to its use via closure in the
       // following anonymous function.
       
       $notifier = function () use ($priorPostValidity): void {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\ConscientiousContactForm\Repositories;
+namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Repositories;
 
 use Dashifen\Repository\Repository;
 use Dashifen\Repository\RepositoryException;
@@ -14,7 +14,7 @@ use Dashifen\Repository\RepositoryException;
  * @property-read string $subject
  * @property-read string $message
  *
- * @package Dashifen\ConscientiousContactForm\Repositories
+ * @package Dashifen\WordPress\Plugins\ConscientiousContactForm\Repositories
  */
 class Message extends Repository
 {

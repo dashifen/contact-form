@@ -5,23 +5,17 @@
  * Description: A WordPress plugin that produces a contact form that can conscientiously either email or simply store messages in the database (or both).
  * Author: David Dashifen Kees
  * Author URI: http://dashifen.com
- * License: MIT
- * License URI: https://opensource.org/licenses/MIT
- * Requires at least: 5.6
- * Requires PHP: 7.4
- * Version: 2.2.1
- *
- * @noinspection PhpIncludeInspection
+ * Version: 2.3.0
  */
 
 use Dashifen\Exception\Exception;
-use Dashifen\ConscientiousContactForm\Agents\FormAgent;
-use Dashifen\ConscientiousContactForm\Agents\SettingsAgent;
-use Dashifen\ConscientiousContactForm\Agents\PostTypeAgent;
-use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\FormAgent;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\SettingsAgent;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\PostTypeAgent;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\ConscientiousContactForm;
 use Dashifen\WPHandler\Agents\Collection\Factory\AgentCollectionFactory;
 
-if (!class_exists('Dashifen\ConscientiousContactForm\ConscientiousContactForm')) {
+if (!class_exists(ConscientiousContactForm::class)) {
   require_once 'vendor/autoload.php';
 }
 

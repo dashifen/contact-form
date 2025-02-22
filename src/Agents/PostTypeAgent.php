@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\ConscientiousContactForm\Agents;
+namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents;
 
 use WP_Post;
 use WP_Query;
@@ -11,16 +11,16 @@ use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
 use Dashifen\WPHandler\Traits\FormattedDateTimeTrait;
 use Dashifen\WPHandler\Traits\PostMetaManagementTrait;
 use Dashifen\WPHandler\Traits\PostTypeRegistrationTrait;
-use Dashifen\ConscientiousContactForm\Repositories\Message;
-use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
-use Dashifen\ConscientiousContactForm\Services\SettingsValidator;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Repositories\Message;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\ConscientiousContactForm;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Services\SettingsValidator;
 
 /**
  * Class PostTypeAgent
  *
  * @property ConscientiousContactForm $handler
  *
- * @package Dashifen\ConscientiousContactForm\Agents
+ * @package Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents
  */
 class PostTypeAgent extends AbstractPluginAgent
 {
@@ -76,7 +76,7 @@ class PostTypeAgent extends AbstractPluginAgent
         
         // the work of this attachment is so simple it's pointless to add it
         // to a method below.  we just return an empty array to remove the
-        // bulk actions from our CPT's listing.
+        // bulk actions from our custom post type's listing.
         
         $this->addFilter('bulk_actions-edit-' . self::POST_TYPE, fn() => []);
       }
@@ -371,9 +371,8 @@ class PostTypeAgent extends AbstractPluginAgent
         // our message is the post's content.  typically, this wouldn't be on
         // the listing page, but this isn't a typical CPT.  using a <details>
         // element in this way allows us to show the message's title and then
-        // it's contents in one cell.  notice that we don't both to run the
-        // content through filters; what the visitor enters is what we get
-        // here.
+        // it's contents in one cell.  notice that we don't run the content
+        // through filters; what the visitor enters is what we get here.
         
         $content = get_post_field('post_content', $postId);
         $format = get_post_field('post_status', $postId) === 'unread'
@@ -417,8 +416,8 @@ class PostTypeAgent extends AbstractPluginAgent
   /**
    * addCustomStatusToAllView
    *
-   * Adds our custom post statuses to the All view when visiting our CPT's post
-   * listing.
+   * Adds our custom post statuses to the "All" view when visiting our
+   * custom post type's listing.
    *
    * @param WP_Query $query
    *
@@ -492,7 +491,7 @@ class PostTypeAgent extends AbstractPluginAgent
   {
     // remember, the isValidActionAndNonce function will either return true
     // or die.  therefore, we can put the entirety of our method's work within
-    // the if-block and it'll execute as long as our request is valid.
+    // the if-block, and it'll execute as long as our request is valid.
     
     if ($this->isValidActionAndNonce('toggle')) {
       if (($postId = $_GET['post'] ?? null) !== null) {
@@ -502,13 +501,13 @@ class PostTypeAgent extends AbstractPluginAgent
         
         // now that we've redirected, we need to halt the execution of this
         // request.  otherwise, it's possible that, as the server finishes it,
-        // it could try to send more data to the client and we don't want that.
+        // it could try to send more data to the client, and we don't want that.
         
         exit;
       }
       
       // if we're still executing this request then we couldn't find our post
-      // ID.  without that, we can't really do anything other then die.
+      // ID.  without that, we can't really do anything other than die.
       
       wp_die('Something went wrong: unable to identify post.');
     }
@@ -574,8 +573,8 @@ class PostTypeAgent extends AbstractPluginAgent
     
     // last thing we save is the visitor's IP address.  this may be used at
     // some point to block spam coming from the same IP, we'll see.  it seems
-    // like it might be useful, so we'll make sure it's available from the get
-    // go.
+    // like it might be useful, so we'll make sure it's available from the
+    // get-go
     
     $this->updatePostMeta($postId, 'ip', $_SERVER['REMOTE_ADDR']);
   }
@@ -613,7 +612,6 @@ class PostTypeAgent extends AbstractPluginAgent
    * @param string $action
    *
    * @return string
-   * @noinspection PhpUnusedParameterInspection
    */
   protected function getCapabilityForAction(string $action): string
   {

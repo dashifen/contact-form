@@ -12,14 +12,14 @@
     }
   ],
   "require": {
-    "php": ">=7.4",
-    "dashifen/validator": "^2.1",
-    "dashifen/wp-handler": "^10.3",
-    "timber/timber": "^1.18"
+    "php": ">=8.2",
+    "dashifen/validator": "^3",
+    "dashifen/wp-handler": "^11",
+    "timber/timber": "^2"
   },
   "autoload": {
     "psr-4": {
-      "Dashifen\\ConscientiousContactForm\\": "src"
+      "Dashifen\\WordPress\\Plugins\\ConscientiousContactForm\\": "src"
     }
   },
   "config": {

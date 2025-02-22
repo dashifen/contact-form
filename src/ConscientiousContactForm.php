@@ -1,10 +1,10 @@
 <?php
 
-namespace Dashifen\ConscientiousContactForm;
+namespace Dashifen\WordPress\Plugins\ConscientiousContactForm;
 
 use Dashifen\WPHandler\Handlers\HandlerException;
-use Dashifen\ConscientiousContactForm\Agents\SettingsAgent;
-use Dashifen\ConscientiousContactForm\Agents\PostTypeAgent;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\SettingsAgent;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\PostTypeAgent;
 use Dashifen\WPHandler\Handlers\Plugins\AbstractPluginHandler;
 
 class ConscientiousContactForm extends AbstractPluginHandler

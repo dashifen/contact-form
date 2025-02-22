@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\ConscientiousContactForm\Agents;
+namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents;
 
 use WP_Post;
 use Timber\Timber;
@@ -10,16 +10,16 @@ use Dashifen\WPHandler\Traits\CaseChangingTrait;
 use Dashifen\WPHandler\Handlers\HandlerException;
 use Dashifen\WPHandler\Agents\AbstractPluginAgent;
 use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
-use Dashifen\ConscientiousContactForm\Repositories\Message;
-use Dashifen\ConscientiousContactForm\ConscientiousContactForm;
-use Dashifen\ConscientiousContactForm\Traits\GetPageBySlugTrait;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Repositories\Message;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\ConscientiousContactForm;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Traits\GetPageBySlugTrait;
 
 /**
  * Class ConscientiousContactForm
  *
  * @property ConscientiousContactForm $handler
  *
- * @package Dashifen\ConscientiousContactForm
+ * @package Dashifen\WordPress\Plugins\ConscientiousContactForm
  */
 class FormAgent extends AbstractPluginAgent
 {
@@ -59,7 +59,7 @@ class FormAgent extends AbstractPluginAgent
       // attached here when the plugin is initialized, if a theme or other
       // plugin wants to attach a different action to it, then it'll have to
       // use the remove_all_actions function to clear the hook of any attached
-      // behaviors and then it can add its own.
+      // behaviors, and then, it can add its own.
       
       $this->addAction('display-conscientious-contact-form', 'displayForm');
     }
@@ -156,7 +156,7 @@ class FormAgent extends AbstractPluginAgent
     // also get the page template it's using.  if that page template matches
     // this plugin's form template, we'll return the path to the file that
     // defines its output.  otherwise, if either $post is not a WP_POST or if
-    // it is but it's not using our page template, we just return the template
+    // it is, but it's not using our page template, we just return the template
     // that WP core identified.
     
     $post = get_post();
@@ -224,7 +224,7 @@ class FormAgent extends AbstractPluginAgent
   {
     // this object doesn't "know" anything about our form settings, but the
     // SettingsAgent does.  luckily, our handler can deliver to us a reference
-    // to that agent, and then we can use it's public methods to extract the
+    // to that agent, and then we can use its public methods to extract the
     // information we need here to build our form as follows.
     
     $settingsAgent = $this->handler->getSettingsAgent();
@@ -268,7 +268,7 @@ class FormAgent extends AbstractPluginAgent
     // validation process to make sure that the visitor enters an email address
     // and a message.  the email is even optional unless it's the only means
     // of handling our submission.  as such, all we do here handle the
-    // visitor's submission and redirect to the thank you page.
+    // visitor's submission and redirect to the thank-you page.
     
     $settingsAgent = $this->handler->getSettingsAgent();
     $defaultHandler = $settingsAgent->getDefaultValue('submission-handler');
@@ -325,9 +325,9 @@ class FormAgent extends AbstractPluginAgent
     $defaultRecipient = $settingsAgent->getDefaultValue('recipient');
     $recipient = $settingsAgent->getOption('recipient', $defaultRecipient);
     
-    // if we have an email and it's valid, we'll want to set the From header
+    // if we have an email, and it's valid, we'll want to set the From: header
     // so that a reply can be easily sent.  if we also have a person's name, we
-    // can set the From header to include that.
+    // can set the From: header to include that.
     
     if (!empty($message->email) && filter_var($message->email, FILTER_VALIDATE_EMAIL)) {
       $from = !empty($message->name)

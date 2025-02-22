@@ -1,11 +1,11 @@
 <?php
 
-namespace Dashifen\ConscientiousContactForm\Services;
+namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Services;
 
 use WP_Post;
 use Dashifen\Validator\AbstractValidator;
 use Dashifen\WPHandler\Traits\CaseChangingTrait;
-use Dashifen\ConscientiousContactForm\Traits\GetPageBySlugTrait;
+use Dashifen\WordPress\Plugins\ConscientiousContactForm\Traits\GetPageBySlugTrait;
 
 class SettingsValidator extends AbstractValidator
 {
@@ -22,7 +22,7 @@ class SettingsValidator extends AbstractValidator
     // attribute values.  therefore, we switch them to StudlyCase and add
     // "validate" in front of them to make our method names.
     
-    return 'validate' . $this->kebabToStudlyCase($field);
+    return 'validate' . $this->kebabToPascalCase($field);
   }
   
   /**
@@ -47,7 +47,7 @@ class SettingsValidator extends AbstractValidator
       // message to include this field.  otherwise, we start the message and
       // make sure that it contains "Unknown" as its first word.
       
-      if (strpos(($this->messages['optional-fields'] ?? ''), 'Unknown') === 0) {
+      if (str_starts_with(($this->messages['optional-fields'] ?? ''), 'Unknown')) {
         $this->messages['optional-fields'] = str_replace('field', 'fields', $this->messages['optional-fields']);
         $this->messages['optional-fields'] .= ', ' . $field;
       } else {
