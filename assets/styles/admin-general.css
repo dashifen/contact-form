@@ -93,12 +93,12 @@
     color: white;
 }
 
-.column-conscientious-contact-form-date,
-.column-conscientious-contact-form-from {
+.column-contact-form-date,
+.column-contact-form-from {
     width: 200px;
 }
 
-.column-conscientious-contact-form-status {
+.column-contact-form-status {
     width: 1.5rem;
 }
 
@@ -107,7 +107,7 @@
     width: 1.25rem;
 }
 
-.column-conscientious-contact-form-message summary {
+.column-contact-form-message summary {
     cursor: pointer;
     margin-left: -15px;
 }

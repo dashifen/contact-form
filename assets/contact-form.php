@@ -7,5 +7,5 @@
 // page's content followed by the action which prints our form.
 
 echo apply_filters('the_content',  get_post()->post_content);
-do_action('display-conscientious-contact-form');
+do_action('display-contact-form');
 get_footer();

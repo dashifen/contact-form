@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents;
+namespace Dashifen\WordPress\Plugins\ContactForm\Agents;
 
 use WP_Post;
 use Timber\Timber;
@@ -10,16 +10,16 @@ use Dashifen\WPHandler\Traits\CaseChangingTrait;
 use Dashifen\WPHandler\Handlers\HandlerException;
 use Dashifen\WPHandler\Agents\AbstractPluginAgent;
 use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Repositories\Message;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\ConscientiousContactForm;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Traits\GetPageBySlugTrait;
+use Dashifen\WordPress\Plugins\ContactForm\Repositories\Message;
+use Dashifen\WordPress\Plugins\ContactForm\ContactForm;
+use Dashifen\WordPress\Plugins\ContactForm\Traits\GetPageBySlugTrait;
 
 /**
- * Class ConscientiousContactForm
+ * Class ContactForm
  *
- * @property ConscientiousContactForm $handler
+ * @property ContactForm $handler
  *
- * @package Dashifen\WordPress\Plugins\ConscientiousContactForm
+ * @package Dashifen\WordPress\Plugins\ContactForm
  */
 class FormAgent extends AbstractPluginAgent
 {
@@ -28,7 +28,7 @@ class FormAgent extends AbstractPluginAgent
   use ActionAndNonceTrait;
   
   public const TEMPLATE_NAME = 'Contact Form Template';
-  public const TEMPLATE_FILE = 'conscientious-contact-form.php';
+  public const TEMPLATE_FILE = 'contact-form.php';
   
   /**
    * initialize
@@ -61,7 +61,7 @@ class FormAgent extends AbstractPluginAgent
       // use the remove_all_actions function to clear the hook of any attached
       // behaviors, and then, it can add its own.
       
-      $this->addAction('display-conscientious-contact-form', 'displayForm');
+      $this->addAction('display-contact-form', 'displayForm');
     }
   }
   
@@ -247,7 +247,7 @@ class FormAgent extends AbstractPluginAgent
     
     $context['submit_attrs'] = apply_filters('ccf-submit-attributes', '');
     $context['submit_classes'] = apply_filters('ccf-submit-classes', 'ccf-form-submit');
-    Timber::render('conscientious-contact-form.twig', $context ?? []);
+    Timber::render('contact-form.twig', $context ?? []);
   }
   
   /**
@@ -341,7 +341,7 @@ class FormAgent extends AbstractPluginAgent
     // likely, the easier way to filter will be the subject, but this may be a
     // tool for some.
     
-    $headers[] = 'X-Conscientious-Contact-Form: true';
+    $headers[] = 'X-Contact-Form: true';
     wp_mail($recipient, $subject, $message->message, $headers);
   }
 }

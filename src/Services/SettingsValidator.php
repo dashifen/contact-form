@@ -1,11 +1,11 @@
 <?php
 
-namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Services;
+namespace Dashifen\WordPress\Plugins\ContactForm\Services;
 
 use WP_Post;
 use Dashifen\Validator\AbstractValidator;
 use Dashifen\WPHandler\Traits\CaseChangingTrait;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Traits\GetPageBySlugTrait;
+use Dashifen\WordPress\Plugins\ContactForm\Traits\GetPageBySlugTrait;
 
 class SettingsValidator extends AbstractValidator
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents;
+namespace Dashifen\WordPress\Plugins\ContactForm\Agents;
 
 use WP_Post;
 use WP_Query;
@@ -11,16 +11,16 @@ use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
 use Dashifen\WPHandler\Traits\FormattedDateTimeTrait;
 use Dashifen\WPHandler\Traits\PostMetaManagementTrait;
 use Dashifen\WPHandler\Traits\PostTypeRegistrationTrait;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Repositories\Message;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\ConscientiousContactForm;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Services\SettingsValidator;
+use Dashifen\WordPress\Plugins\ContactForm\Repositories\Message;
+use Dashifen\WordPress\Plugins\ContactForm\ContactForm;
+use Dashifen\WordPress\Plugins\ContactForm\Services\SettingsValidator;
 
 /**
  * Class PostTypeAgent
  *
- * @property ConscientiousContactForm $handler
+ * @property ContactForm $handler
  *
- * @package Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents
+ * @package Dashifen\WordPress\Plugins\ContactForm\Agents
  */
 class PostTypeAgent extends AbstractPluginAgent
 {
@@ -95,7 +95,7 @@ class PostTypeAgent extends AbstractPluginAgent
   {
     $args = [
       'label'               => 'Response',
-      'description'         => 'Responses from our conscientious contact form',
+      'description'         => 'Responses from our contact form',
       'labels'              => $this->getPostTypeLabels('Response', 'Responses'),
       'menu_icon'           => 'dashicons-email',
       'has_archive'         => false,
@@ -335,7 +335,7 @@ class PostTypeAgent extends AbstractPluginAgent
    */
   public function getPostMetaNamePrefix(): string
   {
-    return ConscientiousContactForm::SLUG . '-';
+    return ContactForm::SLUG . '-';
   }
   
   /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents;
+namespace Dashifen\WordPress\Plugins\ContactForm\Agents;
 
 use Timber\Timber;
 use Dashifen\Validator\ValidatorInterface;
@@ -14,17 +14,17 @@ use Dashifen\WPHandler\Agents\AbstractPluginAgent;
 use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
 use Dashifen\WPHandler\Traits\OptionsManagementTrait;
 use Dashifen\WPHandler\Repositories\MenuItems\SubmenuItem;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\ConscientiousContactForm;
+use Dashifen\WordPress\Plugins\ContactForm\ContactForm;
 use Dashifen\WPHandler\Handlers\Plugins\PluginHandlerInterface;
 use Dashifen\WPHandler\Repositories\MenuItems\MenuItemException;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Services\SettingsValidator;
+use Dashifen\WordPress\Plugins\ContactForm\Services\SettingsValidator;
 
 /**
  * Class SettingsAgent
  *
- * @property ConscientiousContactForm $handler
+ * @property ContactForm $handler
  *
- * @package Dashfen\ConscientiousContactForm\Agents
+ * @package Dashfen\ContactForm\Agents
  */
 class SettingsAgent extends AbstractPluginAgent
 {
@@ -156,7 +156,7 @@ class SettingsAgent extends AbstractPluginAgent
   {
     $settings = [
       'menuTitle'  => 'Contact Form',
-      'pageTitle'  => 'Conscientious Contact Form',
+      'pageTitle'  => 'Contact Form',
       'capability' => $this->getCapabilityForAction('access'),
       'method'     => 'showFormSettings',
     ];
@@ -243,7 +243,7 @@ class SettingsAgent extends AbstractPluginAgent
    */
   public function getOptionNamePrefix(): string
   {
-    return ConscientiousContactForm::SLUG . '-';
+    return ContactForm::SLUG . '-';
   }
   
   /**

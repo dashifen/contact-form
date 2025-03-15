@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashifen\WordPress\Plugins\ConscientiousContactForm\Traits;
+namespace Dashifen\WordPress\Plugins\ContactForm\Traits;
 
 use WP_Post;
 

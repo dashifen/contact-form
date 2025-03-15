@@ -1,6 +1,6 @@
 {
   "name": "dashifen/contact-form",
-  "description": "A WordPress plugin that produces a contact form that can conscientiously either email or simply store messages in the database (or both).",
+  "description": "A WordPress plugin that adds a contact form via a page template.",
   "minimum-stability": "stable",
   "type": "wordpress-plugin",
   "license": "MIT",
@@ -13,13 +13,14 @@
   ],
   "require": {
     "php": ">=8.2",
+    "dashifen/data-transfer-object": "^1.1",
     "dashifen/validator": "^3",
     "dashifen/wp-handler": "^11",
     "timber/timber": "^2"
   },
   "autoload": {
     "psr-4": {
-      "Dashifen\\WordPress\\Plugins\\ConscientiousContactForm\\": "src"
+      "Dashifen\\WordPress\\Plugins\\ContactForm\\": "src"
     }
   },
   "config": {

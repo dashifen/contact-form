@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb0685c520e33e41494da8a11ca8820c",
+    "content-hash": "14045bd7bab0ad135682edce76cb682f",
     "packages": [
         {
             "name": "dashifen/case-changing-trait",
@@ -88,6 +88,49 @@
                 "source": "https://github.com/dashifen/collection/tree/3.0.0"
             },
             "time": "2023-09-02T17:16:06+00:00"
+        },
+        {
+            "name": "dashifen/data-transfer-object",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dashifen/data-transfer-object.git",
+                "reference": "315694e29014ab3d62d45a53719e39d0b8b8df8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dashifen/data-transfer-object/zipball/315694e29014ab3d62d45a53719e39d0b8b8df8b",
+                "reference": "315694e29014ab3d62d45a53719e39d0b8b8df8b",
+                "shasum": ""
+            },
+            "require": {
+                "dashifen/debugging": "^1.0",
+                "dashifen/exception": "^1.2",
+                "php": ">=8.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dashifen\\DTO\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "David Dashifen Kees",
+                    "email": "dashifen@dashifen.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "An object that exists to transfer data.",
+            "support": {
+                "issues": "https://github.com/dashifen/data-transfer-object/issues",
+                "source": "https://github.com/dashifen/data-transfer-object/tree/1.1.0"
+            },
+            "time": "2025-03-10T18:31:42+00:00"
         },
         {
             "name": "dashifen/debugging",
@@ -174,21 +217,22 @@
         },
         {
             "name": "dashifen/repository",
-            "version": "4.0.0",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/repository.git",
-                "reference": "032cde0eaf6283377816cae340c84b299d6de779"
+                "reference": "abaa25b7b37bcf935c3ed8ba8ca48b439d2a13b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/repository/zipball/032cde0eaf6283377816cae340c84b299d6de779",
-                "reference": "032cde0eaf6283377816cae340c84b299d6de779",
+                "url": "https://api.github.com/repos/dashifen/repository/zipball/abaa25b7b37bcf935c3ed8ba8ca48b439d2a13b2",
+                "reference": "abaa25b7b37bcf935c3ed8ba8ca48b439d2a13b2",
                 "shasum": ""
             },
             "require": {
                 "dashifen/case-changing-trait": "^1",
                 "dashifen/exception": "^1",
+                "ext-json": "*",
                 "php": ">=8.2"
             },
             "type": "library",
@@ -199,7 +243,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "WTFPL"
             ],
             "authors": [
                 {
@@ -208,12 +252,12 @@
                     "role": "developer"
                 }
             ],
-            "description": "An object with read-only protected properties from which other objects can be extended.",
+            "description": "An object with read-only protected properties from which other objects can be extened.",
             "support": {
                 "issues": "https://github.com/dashifen/repository/issues",
-                "source": "https://github.com/dashifen/repository/tree/4.0.0"
+                "source": "https://github.com/dashifen/repository/tree/4.0.2"
             },
-            "time": "2023-09-05T17:51:39+00:00"
+            "time": "2025-03-07T15:28:51+00:00"
         },
         {
             "name": "dashifen/transformer",

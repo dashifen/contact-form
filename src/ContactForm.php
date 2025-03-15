@@ -1,15 +1,15 @@
 <?php
 
-namespace Dashifen\WordPress\Plugins\ConscientiousContactForm;
+namespace Dashifen\WordPress\Plugins\ContactForm;
 
 use Dashifen\WPHandler\Handlers\HandlerException;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\SettingsAgent;
-use Dashifen\WordPress\Plugins\ConscientiousContactForm\Agents\PostTypeAgent;
+use Dashifen\WordPress\Plugins\ContactForm\Agents\SettingsAgent;
+use Dashifen\WordPress\Plugins\ContactForm\Agents\PostTypeAgent;
 use Dashifen\WPHandler\Handlers\Plugins\AbstractPluginHandler;
 
-class ConscientiousContactForm extends AbstractPluginHandler
+class ContactForm extends AbstractPluginHandler
 {
-  public const SLUG = 'conscientious-contact-form';
+  public const SLUG = 'contact-form';
   
   /**
    * initialize
