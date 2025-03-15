@@ -12,7 +12,7 @@
     }
   ],
   "require": {
-    "php": ">=8.2",
+    "php": ">=8.4",
     "dashifen/data-transfer-object": "^1.1",
     "dashifen/validator": "^3",
     "dashifen/wp-handler": "^11",

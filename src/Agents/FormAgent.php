@@ -10,7 +10,7 @@ use Dashifen\WPHandler\Traits\CaseChangingTrait;
 use Dashifen\WPHandler\Handlers\HandlerException;
 use Dashifen\WPHandler\Agents\AbstractPluginAgent;
 use Dashifen\WPHandler\Traits\ActionAndNonceTrait;
-use Dashifen\WordPress\Plugins\ContactForm\Repositories\Message;
+use Dashifen\WordPress\Plugins\ContactForm\Message;
 use Dashifen\WordPress\Plugins\ContactForm\ContactForm;
 use Dashifen\WordPress\Plugins\ContactForm\Traits\GetPageBySlugTrait;
 

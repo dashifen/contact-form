@@ -3,7 +3,7 @@
 namespace Dashifen\WordPress\Plugins\ContactForm;
 
 use Dashifen\WPHandler\Handlers\HandlerException;
-use Dashifen\WordPress\Plugins\ContactForm\Agents\SettingsAgent;
+use Dashifen\WordPress\Plugins\ContactForm\Agents\OptionsAgent;
 use Dashifen\WordPress\Plugins\ContactForm\Agents\PostTypeAgent;
 use Dashifen\WPHandler\Handlers\Plugins\AbstractPluginHandler;
 
@@ -65,11 +65,11 @@ class ContactForm extends AbstractPluginHandler
    *
    * Returns a reference to our settings agent.
    *
-   * @return SettingsAgent
+   * @return OptionsAgent
    */
-  public function getSettingsAgent(): SettingsAgent
+  public function getSettingsAgent(): OptionsAgent
   {
-    return $this->agentCollection[SettingsAgent::class];
+    return $this->agentCollection[OptionsAgent::class];
   }
   
   /**
