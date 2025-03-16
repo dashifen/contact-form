@@ -1,0 +1,75 @@
+<section class="wrap" aria-labelledby="entry-title">
+  <form method="post" action="{{ function('admin_url', 'admin-post.php') }}">
+    <h1 id="entry-title">Contact Form Settings</h1>
+
+    <p>Fill out these fields to customize both the message you receive from
+      the contact form and the page to which the sender is taken after they
+      contact you.</p>
+
+    <table class="form-table">
+      <tr>
+        <th scope="row" id="subject-field">
+          <label for="subject"><strong>Message Subject</strong></label>
+        </th>
+        <td headers="subject-field">
+          <input type="text" id="subject" name="subject" class="regular-text"
+            value="{{ function('esc_attr', subject) }}"
+            aria-describedby="subject-desc">
+
+          <p id="subject-desc">Enter the subject of the message you'll receive
+            from visitors.</p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" id="recipient-field">
+          <label for="recipient"><strong>Message Recipient</strong></label>
+        </th>
+        <td headers="recipient-field">
+          <input type="email" id="recipient" name="recipient" class="regular-text"
+            value="{{ function('esc_attr', recipient) }}"
+            aria-describedby="recipient-desc">
+
+          <p id="subject-desc">Enter the email messages should be sent to.</p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" id="success-field">
+          <label for="success"><strong>Success Page</strong></label>
+        </th>
+        <td headers="success-field">
+          <select id="success" name="success" aria-describedby="success-desc">
+            <option value=""></option>
+
+            {% for id, title in pages %}
+              <option value="{{ id }}" {{ id == success ? 'selected' : '' }}>{{ title }}</option>
+            {% endfor %}
+          </select>
+
+          <p id="success-desc">Select the page to which visitors are taken
+            when they successfully email you.</p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" id="failure-field">
+          <label for="failure"><strong>Failure Page</strong></label>
+        </th>
+        <td headers="failure-field">
+          <select id="failure" name="failure" aria-describedby="failure-desc">
+            <option value=""></option>
+
+            {% for id, title in pages %}
+              <option value="{{ id }}" {{ id == failure ? 'selected' : '' }}>{{ title }}</option>
+            {% endfor %}
+          </select>
+
+          <p id="failure-desc">Select the page to which visitors are taken
+            when they can't email you.</p>
+        </td>
+      </tr>
+    </table>
+
+    <input type="hidden" name="action" value="{{ action }}">
+    {{ function('wp_nonce_field', action, nonceName, true, false) }}
+    <input type="submit" value="Save Form Settings" class="button button-primary">
+  </form>
+</section>

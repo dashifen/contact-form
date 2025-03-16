@@ -1,0 +1,38 @@
+<form method="post" action="{{ function('admin_url', 'admin-post.php') }}" class="contact-form">
+  <ol class="contact-form-items">
+    {% for field in ['name','email'] %}
+      {% set id = function('uniqid') %}
+      <li class="contact-form-item contact-form-single-line-form-item">
+        <label class="contact-form-label" for="{{ id }}">Your {{ field | capitalize }}:</label>
+        <input class="contact-form-input" id="{{ id }}" name="{{ field }}"
+          type="{{ field == 'email' ? 'email' : 'text' }}">
+      </li>
+    {% endfor %}
+
+    <li class="contact-form-item contact-form-single-line-form-item">
+      <label class="contact-form-label" for="subject">Your Subject:</label>
+      <input type="text" id="subject" name="subject" class="contact-form-input" aria-required="true" required>
+    </li>
+
+    <li class="contact-form-item contact-form-multi-line-form-item">
+      <label class="contact-form-label" for="message">Your message:</label>
+      <textarea class="contact-form-textarea" id="message" name="message" rows="7" cols="35" aria-required="true" required></textarea>
+    </li>
+  </ol>
+
+  <aside class="screen-reader-text">
+    <p>With apologies, if you're hearing about this field, please leave it
+      blank.  It's hidden visually, but if we hide it too well, it won't trap
+      spambots.  We're sorry it thinks you might be one.  If you don't leave
+      the field blank, your submission will be rejected.</p>
+
+    <label for="honeypot">Leave this field blank</label>
+    <input type="text" id="honeypot" name="organization" autocomplete="off" value="">
+  </aside>
+
+  <input type="hidden" name="action" value="{{ action }}">
+  {{ function('wp_nonce_field', action, nonceName, true, false) }}
+  <button type="submit" {{ submit_attrs }} class="{{ submit_classes }}">
+    Send Message
+  </button>
+</form>

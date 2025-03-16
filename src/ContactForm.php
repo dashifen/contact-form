@@ -3,17 +3,14 @@
 namespace Dashifen\WordPress\Plugins\ContactForm;
 
 use Dashifen\WPHandler\Handlers\HandlerException;
-use Dashifen\WordPress\Plugins\ContactForm\Agents\SettingsAgent;
-use Dashifen\WordPress\Plugins\ContactForm\Agents\PostTypeAgent;
+use Dashifen\WordPress\Plugins\ContactForm\Agents\OptionsAgent;
 use Dashifen\WPHandler\Handlers\Plugins\AbstractPluginHandler;
 
 class ContactForm extends AbstractPluginHandler
 {
-  public const SLUG = 'contact-form';
+  public const string SLUG = 'contact-form';
   
   /**
-   * initialize
-   *
    * Uses addAction and/or addFilter to attach protected methods of this object
    * to the WordPress ecosystem of action and filter hooks.
    *
@@ -23,70 +20,22 @@ class ContactForm extends AbstractPluginHandler
   public function initialize(): void
   {
     if (!$this->isInitialized()) {
-      $this->registerActivationHook('activation');
-      $this->registerDeactivationHook('deactivation');
       $this->addAction('init', 'initializeAgents', 1);
       $this->addFilter('timber/locations', 'addTwigLocation');
     }
   }
   
   /**
-   * activation
-   *
-   * When this plugin is activated, we add our ccf responder capability to
-   * the administrators.  This capability can be added to additional roles
-   * by administrators as desired.
-   *
-   * @return void
-   */
-  protected function activation(): void
-  {
-    get_role('administrator')->add_cap(PostTypeAgent::CAPABILITY);
-  }
-  
-  /**
-   * deactivation
-   *
-   * When this plugin is deactivated, we want to remove our ccf responder
-   * capability from all roles; this is a little faster/easier than looking
-   * for the roles to which it has been added.
-   *
-   * @return void
-   */
-  protected function deactivation(): void
-  {
-    foreach (array_keys(wp_roles()->get_names()) as $role) {
-      get_role($role)->remove_cap(PostTypeAgent::CAPABILITY);
-    }
-  }
-  
-  /**
-   * getSettingsAgent
-   *
    * Returns a reference to our settings agent.
    *
-   * @return SettingsAgent
+   * @return OptionsAgent
    */
-  public function getSettingsAgent(): SettingsAgent
+  public function getOptionsAgent(): OptionsAgent
   {
-    return $this->agentCollection[SettingsAgent::class];
+    return $this->agentCollection[OptionsAgent::class];
   }
   
   /**
-   * getPostTypeAgent
-   *
-   * Returns a reference to our PostTypeAgent
-   *
-   * @return PostTypeAgent
-   */
-  public function getPostTypeAgent(): PostTypeAgent
-  {
-    return $this->agentCollection[PostTypeAgent::class];
-  }
-  
-  /**
-   * addTwigLocation
-   *
    * Adds our /assets/twigs folder to the list of places where Timber will
    * look for template files.
    *
@@ -96,7 +45,24 @@ class ContactForm extends AbstractPluginHandler
    */
   protected function addTwigLocation(array $locations): array
   {
-    $locations[] = $this->getPluginDir() . '/assets/twigs/';
+    $locations[] = [$this->getPluginDir() . '/assets/twigs/'];
     return $locations;
+  }
+  
+  /**
+   * Returns the default value for one of this plugin's options.  Placed here
+   * because both Agents need to know these values from time to time.
+   *
+   * @param string $option
+   *
+   * @return string
+   */
+  public function getDefaultValue(string $option): string
+  {
+    return match ($option) {
+      'recipient'          => get_option('admin_email'),
+      'subject'            => 'A message from ' . get_bloginfo('name') . ' website',
+      'success', 'failure' => '',
+    };
   }
 }
