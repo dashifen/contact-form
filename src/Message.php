@@ -31,4 +31,11 @@ class Message extends DTO
       $this->message = sanitize_textarea_field($value);
     }
   }
+  
+  /**
+   * This one is actually our honeypot.  We name it "organization" so that bots
+   * might think it's a relevant field and fill it in.  When processing our
+   * form, if this value is not empty, then we don't send our email.
+   */
+  protected(set) string $organization;
 }

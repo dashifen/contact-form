@@ -40,32 +40,13 @@ class OptionsAgent extends AbstractPluginAgent
    */
   public function getDefaultValues(): array
   {
-    // TODO: Move this to the handler.
     if (sizeof($this->defaultOptionValues) === 0) {
       foreach ($this->getOptionNames() as $option) {
-        $this->defaultOptionValues[$option] = match ($option) {
-          'recipient'          => get_option('admin_email'),
-          'subject'            => 'A message from ' . get_bloginfo('name') . ' website',
-          'success', 'failure' => '',
-        };
+        $this->defaultOptionValues[$option] = $this->handler->getDefaultValue($option);
       }
     }
     
     return $this->defaultOptionValues;
-  }
-  
-  /**
-   * Returns the default value for a specific option or null if that option
-   * doesn't exist.
-   *
-   * @param string $option
-   *
-   * @return mixed|null
-   */
-  public function getDefaultValue(string $option): mixed
-  {
-    // TODO: Move this to the handler.
-    return $this->getDefaultValues()[$option] ?? null;
   }
   
   /**
@@ -172,7 +153,7 @@ class OptionsAgent extends AbstractPluginAgent
     ];
     
     foreach ($this->getOptionNames() as $option) {
-      $context[$option] = $this->getOption($option, $this->getDefaultValue($option));
+      $context[$option] = $this->getOption($option, $this->handler->getDefaultValue($option));
     }
     
     Timber::render('options/options.twig', $context);
