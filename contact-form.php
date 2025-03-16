@@ -11,9 +11,9 @@
 namespace Dashifen\WordPress\Plugins;
 
 use Dashifen\Exception\Exception;
+use Dashifen\WordPress\Plugins\ContactForm\ContactForm;
 use Dashifen\WordPress\Plugins\ContactForm\Agents\FormAgent;
 use Dashifen\WordPress\Plugins\ContactForm\Agents\OptionsAgent;
-use Dashifen\WordPress\Plugins\ContactForm\ContactForm;
 use Dashifen\WPHandler\Agents\Collection\Factory\AgentCollectionFactory;
 
 if (!class_exists(ContactForm::class)) {
@@ -31,7 +31,6 @@ try {
     $acf = new AgentCollectionFactory();
     $acf->registerAgent(FormAgent::class);
     $acf->registerAgent(OptionsAgent::class);
-    $acf->registerAgent(PostTypeAgent::class);
     $ContactForm = new ContactForm();
     $ContactForm->setAgentCollection($acf);
     $ContactForm->initialize();

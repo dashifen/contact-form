@@ -45,7 +45,7 @@ class ContactForm extends AbstractPluginHandler
    */
   protected function addTwigLocation(array $locations): array
   {
-    $locations[] = $this->getPluginDir() . '/assets/twigs/';
+    $locations[] = [$this->getPluginDir() . '/assets/twigs/'];
     return $locations;
   }
   
@@ -55,9 +55,9 @@ class ContactForm extends AbstractPluginHandler
    *
    * @param string $option
    *
-   * @return array
+   * @return string
    */
-  public function getDefaultValue(string $option): array
+  public function getDefaultValue(string $option): string
   {
     return match ($option) {
       'recipient'          => get_option('admin_email'),

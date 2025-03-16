@@ -38,7 +38,6 @@ class FormAgent extends AbstractPluginAgent
   {
     if (!$this->isInitialized()) {
       $this->addFilter('theme_page_templates', 'addFormTemplate');
-      //$this->addFilter('wp_insert_post_data', 'registerFormTemplate');
       $this->addFilter('template_include', 'maybeIncludeFormTemplate');
       
       // these attachments are for our form processing.  notice that we use
@@ -71,59 +70,6 @@ class FormAgent extends AbstractPluginAgent
   {
     $templates[self::TEMPLATE_FILE] = self::TEMPLATE_NAME;
     return $templates;
-  }
-  
-  /**
-   * Tricks WP into thinking that the page template this plugin maintains is
-   * located in the theme folder by altering the cache of page templates in the
-   * database.
-   *
-   * @param array $attributes
-   *
-   * @return array
-   * @link https://www.wpexplorer.com/wordpress-page-templates-plugin/
-   */
-  protected function registerFormTemplate(array $attributes): array
-  {
-    // first, we get our templates and then add ours to it.  if it was already
-    // listed, then our addition simply re-adds the same value at the same
-    // index of the array, so whether it's the first time or the n-th time,
-    // this works perfectly.
-    
-    $templates = $this->getTemplates();
-    $templates[self::TEMPLATE_FILE] = self::TEMPLATE_NAME;
-    
-    // next: construct the WP cache key for page templates so we can remove the
-    // old one and add the new one.  this block of code was found at the site
-    // linked in the phpDocBlock and altered to fit the style of this plugin.
-    
-    $cacheKey = $this->getCacheKey();
-    wp_cache_delete($cacheKey, 'themes');
-    wp_cache_add($cacheKey, $templates, 'themes', 1800);
-    return $attributes;
-  }
-  
-  /**
-   * Gets the list of page templates for the current theme and returns it.
-   * If there are no templates, we return an empty array.
-   *
-   * @return array
-   */
-  private function getTemplates(): array
-  {
-    $templates = wp_get_theme()->get_page_templates();
-    return !empty($templates) ? $templates : [];
-  }
-  
-  /**
-   * Returns the cache key for page-templates constructed just like WP core
-   * does it.
-   *
-   * @return string
-   */
-  private function getCacheKey(): string
-  {
-    return 'page-templates-' . md5(get_theme_root() . '/' . get_stylesheet());
   }
   
   /**
@@ -316,15 +262,13 @@ class FormAgent extends AbstractPluginAgent
     // this X-header may help people do some filtering in their inboxes.
     // likely, the easier way to filter will be the subject, but this may be a
     // tool for some.  we add the site's name to the header in case anyone
-    // receives multiple form messages.  so, if the site's name is Foo Bar Baz
-    // this produces X-Foo-Bar-Baz-Contact-Form: true as a header.
+    // receives multiple form messages.  so, if the site's name is "the Best
+    // Ever Site" this produces X-The-Best-Ever-Site-Contact-Form: true as a
+    // header.
     
-    $siteName = strtolower(get_bloginfo('name'));
-    $pascalSiteName = $this->kebabToPascalCase(sanitize_title($siteName));
-    $headers[] = "X-$pascalSiteName-Contact-Form: true";
-    
-    self::debug($headers, true);
-    
+    $siteName = ucwords(get_bloginfo('name'));
+    $siteName = preg_replace('~\s+~', '-', $siteName);
+    $headers[] = "X-$siteName-Contact-Form: true";
     return wp_mail($recipient, $subject, $message->message, $headers);
   }
   

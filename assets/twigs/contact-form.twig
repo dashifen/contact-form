@@ -1,30 +1,22 @@
-<form method="post" action="{{ function('admin_url', 'admin-post.php') }}" class="ccf-form">
-  <ol class="ccf-form-items">
-    {% for field in optionalFields %}
+<form method="post" action="{{ function('admin_url', 'admin-post.php') }}" class="contact-form">
+  <ol class="contact-form-items">
+    {% for field in ['name','email'] %}
       {% set id = function('uniqid') %}
-      <li class="ccf-form-item ccf-single-line-form-item">
-        <label class="ccf-form-label" for="{{ id }}">Your {{ field | capitalize }}:</label>
-        <input class="ccf-form-input" id="{{ id }}" name="{{ field }}"
-          {% if field == 'email' %}
-            type="email"
-            {% if submissionHandler == 'email' %}
-              aria-required="true" required
-            {% endif %}
-          {% else %}
-            type="text"
-          {% endif %}
-        >
+      <li class="contact-form-item contact-form-single-line-form-item">
+        <label class="contact-form-label" for="{{ id }}">Your {{ field | capitalize }}:</label>
+        <input class="contact-form-input" id="{{ id }}" name="{{ field }}"
+          type="{{ field == 'email' ? 'email' : 'text' }}">
       </li>
     {% endfor %}
 
-    <li class="ccf-form-item ccf-single-line-form-item">
-      <label class="ccf-form-label" for="subject">Your Subject:</label>
-      <input type="text" id="subject" name="subject" class="ccf-form-input" aria-required="true" required>
+    <li class="contact-form-item contact-form-single-line-form-item">
+      <label class="contact-form-label" for="subject">Your Subject:</label>
+      <input type="text" id="subject" name="subject" class="contact-form-input" aria-required="true" required>
     </li>
 
-    <li class="ccf-form-item ccf-multi-line-form-item">
-      <label class="ccf-form-label" for="message">Your message:</label>
-      <textarea class="ccf-form-textarea" id="message" name="message" rows="7" cols="35" aria-required="true" required></textarea>
+    <li class="contact-form-item contact-form-multi-line-form-item">
+      <label class="contact-form-label" for="message">Your message:</label>
+      <textarea class="contact-form-textarea" id="message" name="message" rows="7" cols="35" aria-required="true" required></textarea>
     </li>
   </ol>
 
